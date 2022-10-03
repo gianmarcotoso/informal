@@ -84,4 +84,57 @@ describe('createForm', () => {
 
 		expect(listener).toHaveBeenCalled()
 	})
+
+	it('a listener should be able to call getData to get a fresh version of the form', () => {
+		const form = createForm({ name: 'John' })
+		const listener = jest.fn(() => {
+			expect(form.getData()).toEqual({ name: 'Jane' })
+		})
+
+		form.subscribe(listener)
+
+		form.setData({ name: 'Jane' })
+
+		expect(listener).toHaveBeenCalled()
+	})
+
+	it('applies the middleware on the initial value', () => {
+		const middleware = jest.fn((data: any) => {
+			return {
+				...data,
+				version: 2,
+			}
+		})
+		const form = createForm({ name: 'John' }, middleware as any)
+
+		expect(middleware).toHaveBeenCalled()
+		expect(form.getData()).toEqual({ name: 'John', version: 2 })
+	})
+
+	it('applies the middleware after a value is updated', () => {
+		const middleware = jest.fn((data: any) => {
+			return {
+				...data,
+				version: 2,
+			}
+		})
+		const form = createForm({ name: 'John' }, middleware as any)
+
+		form.setData({ name: 'Jane' })
+
+		expect(middleware).toHaveBeenCalled()
+		expect(form.getData()).toEqual({ name: 'Jane', version: 2 })
+	})
+
+	it('applies the middleware after a value is updated (using immer)', () => {
+		const middleware = jest.fn((data: any) => {
+			data.name = data.name.toUpperCase()
+		})
+		const form = createForm({ name: 'John' }, middleware as any)
+
+		form.setData({ name: 'Jane' })
+
+		expect(middleware).toHaveBeenCalled()
+		expect(form.getData()).toEqual({ name: 'JANE' })
+	})
 })

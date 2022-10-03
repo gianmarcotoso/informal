@@ -1,4 +1,11 @@
+export type DeepPartial<T> = {
+	[P in keyof T]?: DeepPartial<T[P]>
+}
+
+export type MiddlewareFunction<T> = (data: DeepPartial<T>) => DeepPartial<T>
+
 export type Listener = () => void
+export type Unsubscribe = () => void
 
 export type PathElement = string | number
 
@@ -13,7 +20,7 @@ export type Setter<T> = (...args: Args<T>) => void
 export type Form<T> = {
 	getData: Getter
 	setData: Setter<T>
-	subscribe: (listener: Listener) => void
+	subscribe: (listener: Listener) => Unsubscribe
 }
 
 export type List<K> = {

@@ -4,7 +4,7 @@ import multiInput from 'rollup-plugin-multi-input'
 export default {
 	input: ['src/*.ts'],
 	output: {
-		dir: './dist',
+		dir: './lib',
 		entryFileNames: '[name].js',
 		format: 'es',
 	},

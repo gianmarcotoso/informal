@@ -1,11 +1,14 @@
 import { produce } from 'immer'
-import { clone, last, lensPath, set, view } from 'ramda'
+import { clone, identity, last, lensPath, set, view } from 'ramda'
 
 import { normalizePath } from './normalize-path.util'
-import { Args, Form, Listener, PathElement } from './types'
+import { Args, DeepPartial, Form, Listener, MiddlewareFunction, PathElement } from './types'
 
-export function createForm<T>(initialState: Partial<T> = {}): Form<T> {
-	let data = clone(initialState)
+export function createForm<T>(
+	initialState: DeepPartial<T> = {},
+	middleware: MiddlewareFunction<T> = identity,
+): Form<T> {
+	let data = produce(initialState, middleware)
 	const listeners = new Set<Listener>()
 
 	function onUpdate() {
@@ -24,14 +27,16 @@ export function createForm<T>(initialState: Partial<T> = {}): Form<T> {
 
 		const pathLens = lensPath(path)
 
+		let nextData
 		if (typeof value === 'function') {
-			const nextValue = produce(view(pathLens, data), value)
+			const nextValue = produce(view(pathLens, data as T), value)
 
-			data = set(pathLens, nextValue, data)
+			nextData = set(pathLens, nextValue, data as T)
 		} else {
-			data = set(pathLens, value, data) as Partial<T>
+			nextData = set(pathLens, value, data as T)
 		}
 
+		data = produce(nextData, middleware) as T
 		onUpdate()
 	}
 

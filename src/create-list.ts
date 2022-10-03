@@ -1,29 +1,30 @@
 import { identity } from 'ramda'
 
-import { createFocus } from './create-focus'
-import { Args, Form, List, PathElement } from './types'
+import { Args, Form, List } from './types'
 
-export function createList<T, K>(focus: Form<T>, id: CallableFunction = identity): List<K> {
+export function createList<T, K>(form: Form<T>, id: CallableFunction = identity): List<K> {
+	const emptyList: K[] = []
+
 	function getList(): K[] {
-		return focus.getData()
+		return form.getData() ?? emptyList
 	}
 
 	function setList(list: K[]) {
-		focus.setData(list)
+		form.setData(list)
 	}
 
 	function onAddListItem(item: K) {
-		focus.setData((list: K[]) => [...list, item])
+		form.setData((list: K[]) => [...list, item])
 	}
 
 	function onEditListItem(item: K, ...args: Args<K>) {
 		const index = getList().findIndex((i) => id(i) === id(item))
 
-		focus.setData(index, ...args)
+		form.setData(index, ...args)
 	}
 
 	function onRemoveListItem(item: K) {
-		focus.setData((list: K[]) => {
+		form.setData((list: K[]) => {
 			return list.filter((x) => id(x) !== id(item))
 		})
 	}
