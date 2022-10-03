@@ -193,7 +193,7 @@ describe('useFormList', () => {
 				},
 			})
 			const tagsFocus = createFocus(form, 'nest.tags')
-			const [tags, tagsHandlers] = useFormList(tagsFocus, (i: any) => i)
+			const [tags, tagsHandlers] = useFormList(tagsFocus)
 
 			return { data, tags, setData, tagsHandlers }
 		}

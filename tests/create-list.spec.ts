@@ -173,4 +173,18 @@ describe('createList', () => {
 			{ id: 2, name: 'JACK' },
 		])
 	})
+
+	it('allows to create a list from an array of strings', () => {
+		const form = createForm({
+			users: ['John', 'Jane'],
+		})
+		const usersFocus = createFocus(form, 'users')
+		const usersList = createList(usersFocus)
+
+		expect(usersList.getList()).toEqual(['John', 'Jane'])
+
+		usersList.onEditListItem('Jane', 'Jack')
+
+		expect(usersList.getList()).toEqual(['John', 'Jack'])
+	})
 })

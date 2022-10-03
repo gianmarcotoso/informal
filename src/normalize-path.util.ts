@@ -15,10 +15,5 @@ function normalizePathElement(pathElement: PathElement): PathElement | PathEleme
 }
 
 export function normalizePath(...path: PathElement[]): PathElement[] {
-	if (!path) {
-		return []
-	}
-
-	const normalizedPath = flatten(path.map((p) => normalizePathElement(p)))
-	return normalizedPath
+	return flatten(path.map((p) => normalizePathElement(p)))
 }
