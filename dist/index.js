@@ -1,7 +1,15 @@
-export { createForm } from './create-form.js';
-export { createFocus } from './create-focus.js';
-export { createList } from './create-list.js';
-export { wrapHandler } from './wrap-handler.util.js';
-export { normalizePath } from './normalize-path.util.js';
+import { n as normalizePath } from './create-list-54515400.js';
+export { a as createFocus, c as createForm, b as createList, n as normalizePath } from './create-list-54515400.js';
 import 'immer';
 import 'ramda';
+
+function wrapHandler(setter) {
+    return function eventHandler(event) {
+        const target = event.target;
+        const { name, type, value, checked } = target;
+        const path = normalizePath(name);
+        setter(...path, type === 'checkbox' ? checked : value);
+    };
+}
+
+export { wrapHandler };

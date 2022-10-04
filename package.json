@@ -1,7 +1,7 @@
 {
 	"name": "@polaritybit/informal",
 	"version": "0.1.0",
-	"private": false,
+	"private": true,
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/gianmarcotoso/informal"
@@ -10,7 +10,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"test": "jest --coverage",
-		"build": "rimraf dist && rollup --config rollup.config.js"
+		"build": "rimraf dist && rollup --config rollup.config.js && cp package.dist.json ./dist/package.json"
 	},
 	"author": "Gian Marco Toso",
 	"license": "MIT",
@@ -40,9 +40,5 @@
 	"peerDependencies": {
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0"
-	},
-	"publishConfig": {
-		"access": "public",
-		"registry": "https://registry.npmjs.org/"
 	}
 }

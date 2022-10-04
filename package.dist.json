@@ -1,0 +1,25 @@
+{
+	"name": "@polaritybit/informal",
+	"version": "0.1.0",
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gianmarcotoso/informal"
+	},
+	"description": "A UI library agnostic library for forms",
+	"main": "index.js",
+	"author": "Gian Marco Toso",
+	"license": "MIT",
+	"dependencies": {
+		"immer": "^9.0.15",
+		"ramda": "^0.28.0"
+	},
+	"peerDependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	}
+}
