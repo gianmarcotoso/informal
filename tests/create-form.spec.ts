@@ -13,6 +13,18 @@ describe('createForm', () => {
 		expect(form.getData()).toEqual({ name: 'John' })
 	})
 
+	it('should allow to get data nested within the form', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+
+		expect(form.getData('address', 'city')).toEqual('New York')
+	})
+
+	it('should allow to get data using a selector', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+
+		expect(form.getData((data) => data.address.city)).toEqual('New York')
+	})
+
 	it('should allow to set data', () => {
 		const form = createForm({ name: 'John' })
 

@@ -1,4 +1,4 @@
-import { Args, Form, Listener, PathElement } from './types'
+import { Args, Form, Listener, PathElement, Selector } from './types'
 
 export function createFocus<T, K>(Form: Form<T>, ...path: PathElement[]): Form<K> {
 	const listeners = new Set<Listener>()
@@ -9,8 +9,14 @@ export function createFocus<T, K>(Form: Form<T>, ...path: PathElement[]): Form<K
 		}
 	}
 
-	function getData(): K {
-		return Form.getData(...path)
+	function getData<K>(...args: PathElement[] | [Selector<K>]): K {
+		if (args.length === 1 && typeof args[0] === 'function') {
+			const [selector] = args
+
+			return selector(Form.getData(...path) as K)
+		}
+
+		return Form.getData(...([...path, ...args] as PathElement[]))
 	}
 
 	function setData(...args: Args<K>) {

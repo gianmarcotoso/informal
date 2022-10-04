@@ -9,6 +9,7 @@
 		"esModuleInterop": true,
 		"skipLibCheck": true,
 		"outDir": "dist",
+		"jsx": "react-jsx",
 		"forceConsistentCasingInFileNames": true
 	},
 	"exclude": ["tests/**"]

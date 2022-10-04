@@ -11,6 +11,20 @@ describe('createFocus', () => {
 		expect(addressFocus.getData()).toEqual({ city: 'New York' })
 	})
 
+	it('allows to get nested data on a focused object', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const addressFocus = createFocus(form, 'address')
+
+		expect(addressFocus.getData('city')).toEqual('New York')
+	})
+
+	it('allows to get nested data using a selector', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const addressFocus = createFocus(form, 'address')
+
+		expect(addressFocus.getData((data: any) => data.city)).toEqual('New York')
+	})
+
 	it('allows a focused form data to be updated', () => {
 		const form = createForm({ name: 'John', address: { city: 'New York' } })
 		const nameFocus = createFocus(form, 'name')

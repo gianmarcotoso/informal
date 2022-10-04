@@ -2,23 +2,26 @@ export type DeepPartial<T> = {
 	[P in keyof T]?: DeepPartial<T[P]>
 }
 
-export type MiddlewareFunction<T> = (data: DeepPartial<T>) => DeepPartial<T>
-
 export type Listener = () => void
 export type Unsubscribe = () => void
 
+export type Producer<T> = (data: T) => T
+export type Selector<T> = (data: T) => any
+
 export type PathElement = string | number
 
-export type UpdateFunction<T> = (data: T) => T
-
-export type S<T> = UpdateFunction<T> | any
+export type S<T> = Producer<T> | any
 export type Args<T> = [...PathElement[], S<T>]
 
-export type Getter = (...args: PathElement[]) => any
+export interface Getter<T> {
+	(...path: PathElement[]): any
+	(selector: Selector<T>): any
+}
+
 export type Setter<T> = (...args: Args<T>) => void
 
 export type Form<T> = {
-	getData: Getter
+	getData: Getter<T>
 	setData: Setter<T>
 	subscribe: (listener: Listener) => Unsubscribe
 }

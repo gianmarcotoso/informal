@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/react/use-form.hook.ts</title>
+    <title>Code coverage report for src/react/use-form-selector.hook.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/react</a> use-form.hook.ts</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/react</a> use-form-selector.hook.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -77,31 +77,31 @@
 <a name='L12'></a><a href='#L12'>12</a>
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
-<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
+<a name='L15'></a><a href='#L15'>15</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-yes">41x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">41x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { identity } from 'ramda'
-import { useRef, useSyncExternalStore, useTransition } from 'react'
-import { createForm } from '../create-form'
-import { DeepPartial, Form, Getter, Producer, Setter } from '../types'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useCallback, useSyncExternalStore } from 'react'
 &nbsp;
-export function useForm&lt;T&gt;(
-	initialState: DeepPartial&lt;T&gt; = {} as T,
-	middleware: Producer&lt;T&gt; = identity,
-): [T, Setter&lt;T&gt;, Form&lt;T&gt;] {
-	const { current: form } = useRef(createForm&lt;T&gt;(initialState, middleware))
-	const data = useSyncExternalStore(form.subscribe, form.getData)
+import { Form, Selector, Setter } from '../types'
+&nbsp;
+export function useFormSelector&lt;T&gt;(form: Form&lt;T&gt;, selector: Selector&lt;T&gt;): [any, Setter&lt;T&gt;, Form&lt;T&gt;] {
+	const data = useSyncExternalStore(
+		form.subscribe,
+		useCallback(() =&gt; {
+			return form.getData(selector)
+		}, [form, selector]),
+	)
 &nbsp;
 	return [data, form.setData, form]
 }

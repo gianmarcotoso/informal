@@ -1,45 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1664817806997" clover="3.2.0">
-  <project timestamp="1664817806997" name="All files">
-    <metrics statements="78" coveredstatements="78" conditionals="18" coveredconditionals="18" methods="31" coveredmethods="31" elements="127" coveredelements="127" complexity="0" loc="78" ncloc="78" packages="2" files="8" classes="8"/>
+<coverage generated="1664878169623" clover="3.2.0">
+  <project timestamp="1664878169623" name="All files">
+    <metrics statements="89" coveredstatements="89" conditionals="24" coveredconditionals="24" methods="33" coveredmethods="33" elements="146" coveredelements="146" complexity="0" loc="89" ncloc="89" packages="2" files="9" classes="9"/>
     <package name="src">
-      <metrics statements="58" coveredstatements="58" conditionals="15" coveredconditionals="15" methods="28" coveredmethods="28"/>
+      <metrics statements="64" coveredstatements="64" conditionals="21" coveredconditionals="21" methods="28" coveredmethods="28"/>
       <file name="create-focus.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/create-focus.ts">
-        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="6" coveredmethods="6"/>
+        <metrics statements="13" coveredstatements="13" conditionals="3" coveredconditionals="3" methods="6" coveredmethods="6"/>
         <line num="3" count="4" type="stmt"/>
-        <line num="4" count="40" type="stmt"/>
+        <line num="4" count="42" type="stmt"/>
         <line num="7" count="24" type="stmt"/>
         <line num="8" count="12" type="stmt"/>
-        <line num="13" count="107" type="stmt"/>
-        <line num="17" count="24" type="stmt"/>
-        <line num="19" count="24" type="stmt"/>
-        <line num="23" count="23" type="stmt"/>
-        <line num="25" count="23" type="stmt"/>
-        <line num="28" count="40" type="stmt"/>
+        <line num="13" count="109" type="cond" truecount="3" falsecount="0"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="108" type="stmt"/>
+        <line num="23" count="24" type="stmt"/>
+        <line num="25" count="24" type="stmt"/>
+        <line num="29" count="23" type="stmt"/>
+        <line num="31" count="23" type="stmt"/>
+        <line num="34" count="42" type="stmt"/>
       </file>
       <file name="create-form.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/create-form.ts">
-        <metrics statements="21" coveredstatements="21" conditionals="4" coveredconditionals="4" methods="6" coveredmethods="6"/>
-        <line num="1" count="6" type="stmt"/>
-        <line num="2" count="6" type="stmt"/>
-        <line num="4" count="6" type="stmt"/>
-        <line num="7" count="6" type="stmt"/>
-        <line num="11" count="67" type="stmt"/>
-        <line num="12" count="67" type="stmt"/>
-        <line num="15" count="49" type="stmt"/>
-        <line num="16" count="22" type="stmt"/>
-        <line num="21" count="273" type="stmt"/>
-        <line num="25" count="49" type="stmt"/>
-        <line num="26" count="49" type="stmt"/>
+        <metrics statements="24" coveredstatements="24" conditionals="7" coveredconditionals="7" methods="6" coveredmethods="6"/>
+        <line num="1" count="7" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="4" count="7" type="stmt"/>
+        <line num="7" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="8" count="72" type="stmt"/>
+        <line num="9" count="72" type="stmt"/>
+        <line num="12" count="49" type="stmt"/>
+        <line num="13" count="22" type="stmt"/>
+        <line num="18" count="280" type="cond" truecount="3" falsecount="0"/>
+        <line num="19" count="4" type="stmt"/>
+        <line num="21" count="4" type="stmt"/>
+        <line num="24" count="276" type="stmt"/>
         <line num="28" count="49" type="stmt"/>
-        <line num="31" count="49" type="cond" truecount="2" falsecount="0"/>
-        <line num="32" count="13" type="stmt"/>
-        <line num="34" count="13" type="stmt"/>
-        <line num="36" count="36" type="stmt"/>
-        <line num="39" count="49" type="stmt"/>
-        <line num="40" count="49" type="stmt"/>
-        <line num="44" count="25" type="stmt"/>
-        <line num="46" count="25" type="stmt"/>
-        <line num="49" count="67" type="stmt"/>
+        <line num="29" count="49" type="stmt"/>
+        <line num="31" count="49" type="stmt"/>
+        <line num="34" count="49" type="cond" truecount="2" falsecount="0"/>
+        <line num="35" count="13" type="stmt"/>
+        <line num="37" count="13" type="stmt"/>
+        <line num="39" count="36" type="stmt"/>
+        <line num="42" count="49" type="stmt"/>
+        <line num="43" count="49" type="stmt"/>
+        <line num="47" count="26" type="stmt"/>
+        <line num="49" count="26" type="stmt"/>
+        <line num="52" count="72" type="stmt"/>
       </file>
       <file name="create-list.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/create-list.ts">
         <metrics statements="11" coveredstatements="11" conditionals="5" coveredconditionals="5" methods="10" coveredmethods="10"/>
@@ -57,15 +63,15 @@
       </file>
       <file name="normalize-path.util.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/normalize-path.util.ts">
         <metrics statements="9" coveredstatements="9" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
-        <line num="1" count="8" type="stmt"/>
-        <line num="5" count="302" type="cond" truecount="1" falsecount="0"/>
+        <line num="1" count="9" type="stmt"/>
+        <line num="5" count="307" type="cond" truecount="1" falsecount="0"/>
         <line num="6" count="24" type="stmt"/>
-        <line num="9" count="278" type="cond" truecount="3" falsecount="0"/>
+        <line num="9" count="283" type="cond" truecount="3" falsecount="0"/>
         <line num="10" count="57" type="stmt"/>
         <line num="11" count="130" type="stmt"/>
-        <line num="14" count="221" type="stmt"/>
-        <line num="17" count="8" type="stmt"/>
-        <line num="18" count="329" type="stmt"/>
+        <line num="14" count="226" type="stmt"/>
+        <line num="17" count="9" type="stmt"/>
+        <line num="18" count="332" type="stmt"/>
       </file>
       <file name="wrap-handler.util.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/wrap-handler.util.ts">
         <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
@@ -79,7 +85,7 @@
       </file>
     </package>
     <package name="src.react">
-      <metrics statements="20" coveredstatements="20" conditionals="3" coveredconditionals="3" methods="3" coveredmethods="3"/>
+      <metrics statements="25" coveredstatements="25" conditionals="3" coveredconditionals="3" methods="5" coveredmethods="5"/>
       <file name="use-form-focus.hook.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/react/use-form-focus.hook.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
         <line num="1" count="1" type="stmt"/>
@@ -98,6 +104,14 @@
         <line num="19" count="18" type="stmt"/>
         <line num="20" count="18" type="stmt"/>
         <line num="22" count="18" type="stmt"/>
+      </file>
+      <file name="use-form-selector.hook.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/react/use-form-selector.hook.ts">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
       </file>
       <file name="use-form.hook.ts" path="/home/gianmarcotoso/Developer/experiments/informal/src/react/use-form.hook.ts">
         <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>

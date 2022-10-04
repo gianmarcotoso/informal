@@ -76,7 +76,7 @@ describe('use-form.hook', () => {
 	})
 
 	it('applies the middleware on every update', () => {
-		const middleware = (data: DeepPartial<TestFormState>) => {
+		const middleware = (data: TestFormState) => {
 			data.baz = 'qux'
 			data.num! += 1
 
