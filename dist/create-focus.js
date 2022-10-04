@@ -5,8 +5,12 @@ function createFocus(Form, ...path) {
             listener();
         }
     }
-    function getData() {
-        return Form.getData(...path);
+    function getData(...args) {
+        if (args.length === 1 && typeof args[0] === 'function') {
+            const [selector] = args;
+            return selector(Form.getData(...path));
+        }
+        return Form.getData(...[...path, ...args]);
     }
     function setData(...args) {
         Form.setData(...[...path, ...args]);

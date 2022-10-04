@@ -1,17 +1,20 @@
 export declare type DeepPartial<T> = {
     [P in keyof T]?: DeepPartial<T[P]>;
 };
-export declare type MiddlewareFunction<T> = (data: DeepPartial<T>) => DeepPartial<T>;
 export declare type Listener = () => void;
 export declare type Unsubscribe = () => void;
+export declare type Producer<T> = (data: T) => T;
+export declare type Selector<T> = (data: T) => any;
 export declare type PathElement = string | number;
-export declare type UpdateFunction<T> = (data: T) => T;
-export declare type S<T> = UpdateFunction<T> | any;
+export declare type S<T> = Producer<T> | any;
 export declare type Args<T> = [...PathElement[], S<T>];
-export declare type Getter = (...args: PathElement[]) => any;
+export interface Getter<T> {
+    (...path: PathElement[]): any;
+    (selector: Selector<T>): any;
+}
 export declare type Setter<T> = (...args: Args<T>) => void;
 export declare type Form<T> = {
-    getData: Getter;
+    getData: Getter<T>;
     setData: Setter<T>;
     subscribe: (listener: Listener) => Unsubscribe;
 };

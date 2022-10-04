@@ -10,8 +10,12 @@ function createForm(initialState = {}, middleware = identity) {
             listener();
         }
     }
-    function getData(...path) {
-        return view(lensPath(normalizePath(...path)), data);
+    function getData(...args) {
+        if (args.length === 1 && typeof args[0] === 'function') {
+            const [selector] = args;
+            return selector(data);
+        }
+        return view(lensPath(normalizePath(...args)), data);
     }
     function setData(...args) {
         const path = normalizePath(...args.slice(0, -1));

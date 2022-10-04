@@ -1,6 +1,7 @@
 export { useForm } from './use-form.hook.js';
 export { useFormFocus } from './use-form-focus.hook.js';
 export { useFormList } from './use-form-list.hook.js';
+export { useFormSelector } from './use-form-selector.hook.js';
 import 'ramda';
 import 'react';
 import '../create-form.js';
