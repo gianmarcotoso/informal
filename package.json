@@ -1,6 +1,6 @@
 {
 	"name": "@polaritybit/informal",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"private": true,
 	"repository": {
 		"type": "git",
@@ -10,7 +10,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"test": "jest --coverage",
-		"build": "rimraf dist && rollup --config rollup.config.js && cp package.dist.json ./dist/package.json"
+		"build": "rimraf dist && rollup --config rollup.config.js && cp package.dist.json ./dist/package.json && cp README.md ./dist/README.md && cp LICENSE ./dist/LICENSE"
 	},
 	"author": "Gian Marco Toso",
 	"license": "MIT",
