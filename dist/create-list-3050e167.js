@@ -87,18 +87,18 @@ function createFocus(Form, ...path) {
 
 function createList(form, id = identity) {
     const emptyList = [];
-    function getList() {
+    function getItems() {
         var _a;
         return (_a = form.getData()) !== null && _a !== void 0 ? _a : emptyList;
     }
-    function setList(list) {
+    function setItems(list) {
         form.setData(list);
     }
     function addItem(item) {
         form.setData((list) => [...list, item]);
     }
     function updateItem(item, ...args) {
-        const index = getList().findIndex((i) => id(i) === id(item));
+        const index = getItems().findIndex((i) => id(i) === id(item));
         form.setData(index, ...args);
     }
     function removeItem(item) {
@@ -107,8 +107,8 @@ function createList(form, id = identity) {
         });
     }
     return {
-        getList,
-        setList,
+        getItems: getItems,
+        setItems: setItems,
         addItem,
         updateItem,
         removeItem,

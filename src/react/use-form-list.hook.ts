@@ -17,7 +17,7 @@ export function useFormList<T, K>(
 	List<K>,
 ] {
 	const { current: list } = useRef(createList<T, K>(form, id))
-	const items = useSyncExternalStore(form.subscribe, list.getList)
+	const items = useSyncExternalStore(form.subscribe, list.getItems)
 
 	return [
 		items,
@@ -25,7 +25,7 @@ export function useFormList<T, K>(
 			addItem: list.addItem,
 			updateItem: list.updateItem,
 			removeItem: list.removeItem,
-			setItems: list.setList,
+			setItems: list.setItems,
 		},
 		list,
 	]

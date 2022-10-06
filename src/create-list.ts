@@ -5,11 +5,11 @@ import { Args, Form, List } from './types'
 export function createList<T, K>(form: Form<T>, id: CallableFunction = identity): List<K> {
 	const emptyList: K[] = []
 
-	function getList(): K[] {
+	function getItems(): K[] {
 		return form.getData() ?? emptyList
 	}
 
-	function setList(list: K[]) {
+	function setItems(list: K[]) {
 		form.setData(list)
 	}
 
@@ -18,7 +18,7 @@ export function createList<T, K>(form: Form<T>, id: CallableFunction = identity)
 	}
 
 	function updateItem(item: K, ...args: Args<K>) {
-		const index = getList().findIndex((i) => id(i) === id(item))
+		const index = getItems().findIndex((i) => id(i) === id(item))
 
 		form.setData(index, ...args)
 	}
@@ -30,8 +30,8 @@ export function createList<T, K>(form: Form<T>, id: CallableFunction = identity)
 	}
 
 	return {
-		getList,
-		setList,
+		getItems: getItems,
+		setItems: setItems,
 		addItem,
 		updateItem,
 		removeItem,

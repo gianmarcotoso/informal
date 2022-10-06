@@ -19,8 +19,8 @@ export declare type Form<T> = {
     subscribe: (listener: Listener) => Unsubscribe;
 };
 export declare type List<K> = {
-    getList: () => K[];
-    setList: (list: K[]) => void;
+    getItems: () => K[];
+    setItems: (list: K[]) => void;
     addItem: (item: K) => void;
     updateItem: (item: K, ...args: Args<K>) => void;
     removeItem: (item: K) => void;

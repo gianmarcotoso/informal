@@ -1,6 +1,6 @@
 import { identity } from 'ramda';
 import { useRef, useSyncExternalStore, useCallback } from 'react';
-import { c as createForm, a as createFocus, b as createList } from './create-list-b0797f04.js';
+import { c as createForm, a as createFocus, b as createList } from './create-list-3050e167.js';
 import 'immer';
 
 function useForm(initialState = {}, middleware = identity) {
@@ -17,14 +17,14 @@ function useFormFocus(form, ...path) {
 
 function useFormList(form, id = identity) {
     const { current: list } = useRef(createList(form, id));
-    const items = useSyncExternalStore(form.subscribe, list.getList);
+    const items = useSyncExternalStore(form.subscribe, list.getItems);
     return [
         items,
         {
             addItem: list.addItem,
             updateItem: list.updateItem,
             removeItem: list.removeItem,
-            setItems: list.setList,
+            setItems: list.setItems,
         },
         list,
     ];

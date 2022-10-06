@@ -13,7 +13,7 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jane' },
 		])
@@ -29,13 +29,13 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		usersList.setList([
+		usersList.setItems([
 			{ id: 1, name: 'Billy' },
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
 		])
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'Billy' },
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
@@ -54,18 +54,18 @@ describe('createList', () => {
 		])
 		const usersList = createList(form, (user: any) => user.id)
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jane' },
 		])
 
-		usersList.setList([
+		usersList.setItems([
 			{ id: 1, name: 'Billy' },
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
 		])
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'Billy' },
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
@@ -90,7 +90,7 @@ describe('createList', () => {
 
 		usersList.addItem({ id: 3, name: 'Billy' })
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jane' },
 			{ id: 3, name: 'Billy' },
@@ -109,7 +109,7 @@ describe('createList', () => {
 
 		usersList.removeItem({ id: 2, name: 'Jane' })
 
-		expect(usersList.getList()).toEqual([{ id: 1, name: 'John' }])
+		expect(usersList.getItems()).toEqual([{ id: 1, name: 'John' }])
 	})
 
 	it('allows to edit an item in the array by using a path', () => {
@@ -124,7 +124,7 @@ describe('createList', () => {
 
 		usersList.updateItem({ id: 2, name: 'Jane' }, 'name', 'Jack')
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jack' },
 		])
@@ -142,7 +142,7 @@ describe('createList', () => {
 
 		usersList.updateItem({ id: 2, name: 'Jane' }, { name: 'Jack' })
 
-		expect(usersList.getList()).toEqual([{ id: 1, name: 'John' }, { name: 'Jack' }])
+		expect(usersList.getItems()).toEqual([{ id: 1, name: 'John' }, { name: 'Jack' }])
 	})
 
 	it('allows to edit an item in the array by using a function', () => {
@@ -159,7 +159,7 @@ describe('createList', () => {
 			user.name = 'Jack'
 		})
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jack' },
 		])
@@ -168,7 +168,7 @@ describe('createList', () => {
 			return name.toUpperCase()
 		})
 
-		expect(usersList.getList()).toEqual([
+		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'JACK' },
 		])
@@ -181,10 +181,10 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus)
 
-		expect(usersList.getList()).toEqual(['John', 'Jane'])
+		expect(usersList.getItems()).toEqual(['John', 'Jane'])
 
 		usersList.updateItem('Jane', 'Jack')
 
-		expect(usersList.getList()).toEqual(['John', 'Jack'])
+		expect(usersList.getItems()).toEqual(['John', 'Jack'])
 	})
 })

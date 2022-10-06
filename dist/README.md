@@ -339,22 +339,22 @@ If not specified, the _identifier_ function is the identity function `item => it
 
 `createList` returns an object with methods to read and write on the list.
 
-### `getList`
+### `getItems`
 
-`getList` returns all the elements tracked by the list.
+`getItems` returns all the elements tracked by the list.
 
 ```js
-todosList.getList()
+todosList.getItems()
 // [{ id: 1, text: 'Buy milk' }, { id: 2, text: 'Buy eggs' }]
 ```
 
-### `setList`
+### `setItems`
 
-`setList` replaces the list with a new one.
+`setItems` replaces the list with a new one.
 
 ```js
-todosList.setList([])
-todosList.getList() // []
+todosList.setItems([])
+todosList.getItems() // []
 ```
 
 ### `addItem`
@@ -370,7 +370,7 @@ todosList.addItem({ id: 3, text: 'Buy bread' })
 `removeItem` allows to remove an item from the list. It should receive a reference to that needs to be removed:
 
 ```js
-const todos = todosList.getList()
+const todos = todosList.getItems()
 const itemToRemove = todos[0]
 
 todosList.removeItem(itemToRemove)
@@ -381,7 +381,7 @@ todosList.removeItem(itemToRemove)
 `updateItem` allows to update an item in the list. It has the same API of the `setData` function, but receives a reference to the item that needs to be updated as the first parameter:
 
 ```js
-const todos = todosList.getList()
+const todos = todosList.getItems()
 
 todos.updateItem(todos[0], 'text', 'Buy milk and eggs')
 todos.updateItem(todos[0], (item) => {
@@ -519,7 +519,7 @@ function Todos() {
 		addItem({ id: Math.random(), title: title, done: false })
 	}
 
-	function handleResetList() {
+	function handleResetItems() {
 		setItems([])
 	}
 
@@ -529,7 +529,7 @@ function Todos() {
 				<input name="title" type="text" />
 				<button type="submit">Add</button>
 			</form>
-			<button onClick={handleResetList}>Reset</button>
+			<button onClick={handleResetItems}>Reset</button>
 			<ul>
 				{todosList.map((todo) => {
 					const onEditTodo = wrapHandler(updateItem.bind(undefined, todo))
