@@ -1,6 +1,6 @@
 import { identity } from 'ramda';
 import { useRef, useSyncExternalStore, useCallback } from 'react';
-import { c as createForm, a as createFocus, b as createList } from './create-list-54515400.js';
+import { c as createForm, a as createFocus, b as createList } from './create-list-b0797f04.js';
 import 'immer';
 
 function useForm(initialState = {}, middleware = identity) {
@@ -21,10 +21,10 @@ function useFormList(form, id = identity) {
     return [
         items,
         {
-            onAddItem: list.onAddListItem,
-            onEditItem: list.onEditListItem,
-            onRemoveItem: list.onRemoveListItem,
-            onSetItems: list.setList,
+            addItem: list.addItem,
+            updateItem: list.updateItem,
+            removeItem: list.removeItem,
+            setItems: list.setList,
         },
         list,
     ];

@@ -94,14 +94,14 @@ function createList(form, id = identity) {
     function setList(list) {
         form.setData(list);
     }
-    function onAddListItem(item) {
+    function addItem(item) {
         form.setData((list) => [...list, item]);
     }
-    function onEditListItem(item, ...args) {
+    function updateItem(item, ...args) {
         const index = getList().findIndex((i) => id(i) === id(item));
         form.setData(index, ...args);
     }
-    function onRemoveListItem(item) {
+    function removeItem(item) {
         form.setData((list) => {
             return list.filter((x) => id(x) !== id(item));
         });
@@ -109,9 +109,9 @@ function createList(form, id = identity) {
     return {
         getList,
         setList,
-        onAddListItem,
-        onEditListItem,
-        onRemoveListItem,
+        addItem,
+        updateItem,
+        removeItem,
     };
 }
 
