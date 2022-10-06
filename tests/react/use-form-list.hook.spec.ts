@@ -69,7 +69,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.todosHandlers.onAddItem({ id: 1, name: 'foo' }))
+		act(() => result.current.todosHandlers.addItem({ id: 1, name: 'foo' }))
 
 		expect(result.current.todos).toHaveLength(1)
 		expect(result.current.todos[0]).toEqual({ id: 1, name: 'foo' })
@@ -91,7 +91,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.todosHandlers.onEditItem(result.current.todos[0], 'name', 'baz'))
+		act(() => result.current.todosHandlers.updateItem(result.current.todos[0], 'name', 'baz'))
 
 		expect(result.current.todos).toHaveLength(2)
 		expect(result.current.todos[0]).toEqual({ id: 1, name: 'baz' })
@@ -113,7 +113,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.todosHandlers.onRemoveItem(result.current.todos[0]))
+		act(() => result.current.todosHandlers.removeItem(result.current.todos[0]))
 
 		expect(result.current.todos).toHaveLength(1)
 	})
@@ -133,7 +133,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.tagsHandlers.onAddItem('foo'))
+		act(() => result.current.tagsHandlers.addItem('foo'))
 
 		expect(result.current.tags).toHaveLength(1)
 		expect(result.current.tags[0]).toEqual('foo')
@@ -157,7 +157,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.todosHandlers.onEditItem({ id: 1, name: 'bar' }, { id: 7, name: 'baz' }))
+		act(() => result.current.todosHandlers.updateItem({ id: 1, name: 'bar' }, { id: 7, name: 'baz' }))
 
 		expect(result.current.todos).toHaveLength(2)
 		expect(result.current.todos[0]).toEqual({ id: 7, name: 'baz' })
@@ -179,7 +179,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.todosHandlers.onEditItem({ id: 3, name: 'baz' }, 'name', 'qux'))
+		act(() => result.current.todosHandlers.updateItem({ id: 3, name: 'baz' }, 'name', 'qux'))
 
 		expect(result.current.todos).toHaveLength(2)
 		expect(result.current.todos[0]).toEqual({ id: 1, name: 'foo' })
@@ -200,7 +200,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.tagsHandlers.onRemoveItem('foo'))
+		act(() => result.current.tagsHandlers.removeItem('foo'))
 
 		expect(result.current.tags).toHaveLength(1)
 		expect(result.current.tags[0]).toEqual('bar')
@@ -224,7 +224,7 @@ describe('useFormList', () => {
 
 		const { result } = renderHook(() => useFormListHookTest())
 
-		act(() => result.current.todosHandlers.onRemoveItem({ id: 1, name: 'foo' }))
+		act(() => result.current.todosHandlers.removeItem({ id: 1, name: 'foo' }))
 
 		expect(result.current.todos).toHaveLength(1)
 		expect(result.current.todos[0]).toEqual({ id: 2, name: 'bar' })

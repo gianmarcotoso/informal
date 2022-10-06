@@ -13,17 +13,17 @@ export function createList<T, K>(form: Form<T>, id: CallableFunction = identity)
 		form.setData(list)
 	}
 
-	function onAddListItem(item: K) {
+	function addItem(item: K) {
 		form.setData((list: K[]) => [...list, item])
 	}
 
-	function onEditListItem(item: K, ...args: Args<K>) {
+	function updateItem(item: K, ...args: Args<K>) {
 		const index = getList().findIndex((i) => id(i) === id(item))
 
 		form.setData(index, ...args)
 	}
 
-	function onRemoveListItem(item: K) {
+	function removeItem(item: K) {
 		form.setData((list: K[]) => {
 			return list.filter((x) => id(x) !== id(item))
 		})
@@ -32,8 +32,8 @@ export function createList<T, K>(form: Form<T>, id: CallableFunction = identity)
 	return {
 		getList,
 		setList,
-		onAddListItem,
-		onEditListItem,
-		onRemoveListItem,
+		addItem,
+		updateItem,
+		removeItem,
 	}
 }

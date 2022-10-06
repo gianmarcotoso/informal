@@ -9,10 +9,10 @@ export function useFormList<T, K>(
 ): [
 	K[],
 	{
-		onAddItem: (item: K) => void
-		onRemoveItem: (item: K) => void
-		onEditItem: (item: K, ...args: Args<K>) => void
-		onSetItems: (items: K[]) => void
+		addItem: (item: K) => void
+		removeItem: (item: K) => void
+		updateItem: (item: K, ...args: Args<K>) => void
+		setItems: (items: K[]) => void
 	},
 	List<K>,
 ] {
@@ -22,10 +22,10 @@ export function useFormList<T, K>(
 	return [
 		items,
 		{
-			onAddItem: list.onAddListItem,
-			onEditItem: list.onEditListItem,
-			onRemoveItem: list.onRemoveListItem,
-			onSetItems: list.setList,
+			addItem: list.addItem,
+			updateItem: list.updateItem,
+			removeItem: list.removeItem,
+			setItems: list.setList,
 		},
 		list,
 	]

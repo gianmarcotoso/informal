@@ -29,7 +29,7 @@ export type Form<T> = {
 export type List<K> = {
 	getList: () => K[]
 	setList: (list: K[]) => void
-	onAddListItem: (item: K) => void
-	onEditListItem: (item: K, ...args: Args<K>) => void
-	onRemoveListItem: (item: K) => void
+	addItem: (item: K) => void
+	updateItem: (item: K, ...args: Args<K>) => void
+	removeItem: (item: K) => void
 }

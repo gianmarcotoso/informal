@@ -88,7 +88,7 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		usersList.onAddListItem({ id: 3, name: 'Billy' })
+		usersList.addItem({ id: 3, name: 'Billy' })
 
 		expect(usersList.getList()).toEqual([
 			{ id: 1, name: 'John' },
@@ -107,7 +107,7 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		usersList.onRemoveListItem({ id: 2, name: 'Jane' })
+		usersList.removeItem({ id: 2, name: 'Jane' })
 
 		expect(usersList.getList()).toEqual([{ id: 1, name: 'John' }])
 	})
@@ -122,7 +122,7 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		usersList.onEditListItem({ id: 2, name: 'Jane' }, 'name', 'Jack')
+		usersList.updateItem({ id: 2, name: 'Jane' }, 'name', 'Jack')
 
 		expect(usersList.getList()).toEqual([
 			{ id: 1, name: 'John' },
@@ -140,7 +140,7 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		usersList.onEditListItem({ id: 2, name: 'Jane' }, { name: 'Jack' })
+		usersList.updateItem({ id: 2, name: 'Jane' }, { name: 'Jack' })
 
 		expect(usersList.getList()).toEqual([{ id: 1, name: 'John' }, { name: 'Jack' }])
 	})
@@ -155,7 +155,7 @@ describe('createList', () => {
 		const usersFocus = createFocus(form, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
-		usersList.onEditListItem({ id: 2, name: 'Jane' }, (user: any) => {
+		usersList.updateItem({ id: 2, name: 'Jane' }, (user: any) => {
 			user.name = 'Jack'
 		})
 
@@ -164,7 +164,7 @@ describe('createList', () => {
 			{ id: 2, name: 'Jack' },
 		])
 
-		usersList.onEditListItem({ id: 2, name: 'Jack' }, 'name', (name: string) => {
+		usersList.updateItem({ id: 2, name: 'Jack' }, 'name', (name: string) => {
 			return name.toUpperCase()
 		})
 
@@ -183,7 +183,7 @@ describe('createList', () => {
 
 		expect(usersList.getList()).toEqual(['John', 'Jane'])
 
-		usersList.onEditListItem('Jane', 'Jack')
+		usersList.updateItem('Jane', 'Jack')
 
 		expect(usersList.getList()).toEqual(['John', 'Jack'])
 	})

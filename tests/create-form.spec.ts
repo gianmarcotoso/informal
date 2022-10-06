@@ -19,6 +19,24 @@ describe('createForm', () => {
 		expect(form.getData('address', 'city')).toEqual('New York')
 	})
 
+	it('should allow to use dot notation to get nested data within the form', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+
+		expect(form.getData('address.city')).toEqual('New York')
+	})
+
+	it('should support numbers to reference elements at a specific index within an array', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' }, todos: [{ id: 1, title: 'Buy food' }] })
+
+		expect(form.getData('todos.0.title')).toEqual('Buy food')
+	})
+
+	it('should support mixing path elements and dot notation', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' }, todos: [{ id: 1, title: 'Buy food' }] })
+
+		expect(form.getData('todos', '0.title')).toEqual('Buy food')
+	})
+
 	it('should allow to get data using a selector', () => {
 		const form = createForm({ name: 'John', address: { city: 'New York' } })
 
@@ -29,6 +47,14 @@ describe('createForm', () => {
 		const form = createForm({ name: 'John' })
 
 		form.setData({ name: 'Jane' })
+
+		expect(form.getData()).toEqual({ name: 'Jane' })
+	})
+
+	it('should allow to set data using a producer function', () => {
+		const form = createForm({ name: 'John' })
+
+		form.setData((data: any) => ({ name: 'Jane' }))
 
 		expect(form.getData()).toEqual({ name: 'Jane' })
 	})
@@ -89,12 +115,15 @@ describe('createForm', () => {
 	it('should notify all listeners when the form changes', () => {
 		const form = createForm({ name: 'John' })
 		const listener = jest.fn()
+		const listener2 = jest.fn()
 
 		form.subscribe(listener)
+		form.subscribe(listener2)
 
 		form.setData({ name: 'Jane' })
 
 		expect(listener).toHaveBeenCalled()
+		expect(listener2).toHaveBeenCalled()
 	})
 
 	it('a listener should be able to call getData to get a fresh version of the form', () => {
@@ -108,6 +137,23 @@ describe('createForm', () => {
 		form.setData({ name: 'Jane' })
 
 		expect(listener).toHaveBeenCalled()
+	})
+
+	it('a listener should no longer be called after being unsubscribed', () => {
+		const form = createForm({ name: 'John' })
+		const listener = jest.fn()
+
+		const unsubscribe = form.subscribe(listener)
+
+		form.setData({ name: 'Jane' })
+
+		expect(listener).toHaveBeenCalled()
+
+		unsubscribe()
+
+		form.setData({ name: 'Billy' })
+
+		expect(listener).toHaveBeenCalledTimes(1)
 	})
 
 	it('applies the middleware on the initial value', () => {
@@ -148,5 +194,26 @@ describe('createForm', () => {
 
 		expect(middleware).toHaveBeenCalled()
 		expect(form.getData()).toEqual({ name: 'JANE' })
+	})
+
+	it('should support an array as content for the form, instead of an object', () => {
+		const form = createForm(['John', 'Jane'])
+
+		expect(form.getData()).toEqual(['John', 'Jane'])
+		expect(form.getData(0)).toEqual('John')
+
+		form.setData(['Billy', 'Bob'])
+
+		expect(form.getData()).toEqual(['Billy', 'Bob'])
+	})
+
+	it('should support a primitive type such as a string as the content for the form, instead of an object', () => {
+		const form = createForm('John')
+
+		expect(form.getData()).toEqual('John')
+
+		form.setData('Jane')
+
+		expect(form.getData()).toEqual('Jane')
 	})
 })

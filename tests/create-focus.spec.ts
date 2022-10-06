@@ -67,4 +67,29 @@ describe('createFocus', () => {
 
 		expect(listener).toHaveBeenCalled()
 	})
+
+	it('should still call the form listeners when a focused field is updated', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const addressFocus = createFocus(form, 'address')
+
+		const listener = jest.fn(() => {
+			expect(form.getData()).toEqual({ name: 'John', address: { city: 'Paris' } })
+		})
+		form.subscribe(listener)
+
+		addressFocus.setData('city', 'Paris')
+
+		expect(listener).toHaveBeenCalled()
+	})
+
+	it('should allow focuses to be created recursively', () => {
+		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const addressFocus = createFocus(form, 'address')
+		const cityFocus = createFocus(addressFocus, 'city')
+
+		expect(cityFocus.getData()).toEqual('New York')
+
+		cityFocus.setData('Paris')
+		expect(form.getData()).toEqual({ name: 'John', address: { city: 'Paris' } })
+	})
 })
