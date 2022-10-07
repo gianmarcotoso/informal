@@ -392,6 +392,32 @@ const updateFirstTodo = todos.updateItem.bind(undefined, todos[0])
 updateFirstTodo('text', 'Buy milk and eggs')
 ```
 
+### Middleware
+
+A form can be created with an optional middleware function passed as a second parameter; this function will be invoked
+after each update and _before_ notifying the subscribers. A middleware is a producer function that
+receives the current value of the form and returns a new value that will be used as the new value of the form; since it
+uses `immer` behind the scenes, the value of the tracked data can also be mutated directly.
+
+```js
+const form = createForm(
+	{
+		name: 'Jimmy',
+		age: 33,
+	},
+	(value) => {
+		value.name = value.name.toUpperCase()
+	},
+)
+
+form.getData('name') // 'JIMMY'
+form.setData('name', 'Bob')
+form.getData('name') // 'BOB'
+```
+
+Please note that a form's middleware is always called, even if the update comes from a focused portion of the form or
+a list handler.
+
 ## Usage with React
 
 `informal` comes with React hooks that can be used instead of (or in addition to) the VanillaJS API.
@@ -468,6 +494,20 @@ function MyForm() {
 		</form>
 	)
 }
+```
+
+Just as with `createForm`, `useForm` allows to pass a middleware function as a second parameter:
+
+```js
+const [data, setData, form] = useForm(
+	{
+		name: 'Jimmy Doe',
+		age: 33,
+	},
+	(value) => {
+		value.name = value.name.toUpperCase()
+	},
+)
 ```
 
 ### `useFormFocus`
@@ -629,5 +669,3 @@ I am developing this library for my own projects, and I do use it in production.
 ## License
 
 MIT
-
-
