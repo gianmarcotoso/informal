@@ -13,7 +13,7 @@ export interface Getter<T> {
     (selector: Selector<T>): any;
 }
 export declare type Setter<T> = (...args: Args<T>) => void;
-export declare type Form<T> = {
+export declare type Store<T> = {
     getData: Getter<T>;
     setData: Setter<T>;
     subscribe: (listener: Listener) => Unsubscribe;

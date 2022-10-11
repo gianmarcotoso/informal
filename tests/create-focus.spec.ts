@@ -1,9 +1,9 @@
-import { createForm } from '../src/create-form'
+import { createStore } from '../src/create-store'
 import { createFocus } from '../src/create-focus'
 
 describe('createFocus', () => {
 	it('allows to create a focus on a form', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const nameFocus = createFocus(form, 'name')
 		const addressFocus = createFocus(form, 'address')
 
@@ -12,21 +12,21 @@ describe('createFocus', () => {
 	})
 
 	it('allows to get nested data on a focused object', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const addressFocus = createFocus(form, 'address')
 
 		expect(addressFocus.getData('city')).toEqual('New York')
 	})
 
 	it('allows to get nested data using a selector', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const addressFocus = createFocus(form, 'address')
 
 		expect(addressFocus.getData((data: any) => data.city)).toEqual('New York')
 	})
 
 	it('allows a focused form data to be updated', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const nameFocus = createFocus(form, 'name')
 		const addressFocus = createFocus(form, 'address')
 
@@ -37,7 +37,7 @@ describe('createFocus', () => {
 	})
 
 	it('allows to update a key on a focused form object', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const addressFocus = createFocus(form, 'address')
 
 		addressFocus.setData('city', 'Paris')
@@ -46,7 +46,7 @@ describe('createFocus', () => {
 	})
 
 	it('allows to update a focused form object using a function', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York', street: 'Street Name 123' } })
+		const form = createStore({ name: 'John', address: { city: 'New York', street: 'Street Name 123' } })
 		const addressFocus = createFocus(form, 'address')
 
 		addressFocus.setData((address: any) => ({ ...address, city: 'Paris' }))
@@ -55,7 +55,7 @@ describe('createFocus', () => {
 	})
 
 	it('allows to subscribe to the focused form', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const addressFocus = createFocus(form, 'address')
 
 		const listener = jest.fn(() => {
@@ -69,7 +69,7 @@ describe('createFocus', () => {
 	})
 
 	it('should still call the form listeners when a focused field is updated', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const addressFocus = createFocus(form, 'address')
 
 		const listener = jest.fn(() => {
@@ -83,7 +83,7 @@ describe('createFocus', () => {
 	})
 
 	it('should allow focuses to be created recursively', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 		const addressFocus = createFocus(form, 'address')
 		const cityFocus = createFocus(addressFocus, 'city')
 

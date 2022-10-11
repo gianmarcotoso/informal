@@ -1,2 +1,2 @@
-import { Form, PathElement } from './types';
-export declare function createFocus<T, K>(Form: Form<T>, ...path: PathElement[]): Form<K>;
+import { Store, PathElement } from './types';
+export declare function createFocus<T, K>(store: Store<T>, ...path: PathElement[]): Store<K>;

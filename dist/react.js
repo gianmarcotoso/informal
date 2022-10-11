@@ -1,23 +1,23 @@
 import { identity } from 'ramda';
-import { useRef, useSyncExternalStore, useCallback } from 'react';
-import { c as createForm, a as createFocus, b as createList } from './create-list-3050e167.js';
+import { useRef, useSyncExternalStore, useMemo, useCallback } from 'react';
+import { c as createStore, a as createFocus, b as createList } from './create-list-c042b693.js';
 import 'immer';
 
-function useForm(initialState = {}, middleware = identity) {
-    const { current: form } = useRef(createForm(initialState, middleware));
-    const data = useSyncExternalStore(form.subscribe, form.getData);
+function useStore(initialState = {}, middleware = identity) {
+    const { current: form } = useRef(createStore(initialState, middleware));
+    const data = useSyncExternalStore(form.subscribe, form.getData, form.getData);
     return [data, form.setData, form];
 }
 
-function useFormFocus(form, ...path) {
-    const { current: focus } = useRef(createFocus(form, ...path));
-    const data = useSyncExternalStore(focus.subscribe, focus.getData);
+function useStoreFocus(form, ...path) {
+    const focus = useMemo(() => createFocus(form, ...path), [form, path]);
+    const data = useSyncExternalStore(focus.subscribe, focus.getData, focus.getData);
     return [data, focus.setData, focus];
 }
 
-function useFormList(form, id = identity) {
+function useStoreList(form, id = identity) {
     const { current: list } = useRef(createList(form, id));
-    const items = useSyncExternalStore(form.subscribe, list.getItems);
+    const items = useSyncExternalStore(form.subscribe, list.getItems, list.getItems);
     return [
         items,
         {
@@ -30,11 +30,11 @@ function useFormList(form, id = identity) {
     ];
 }
 
-function useFormSelector(form, selector) {
+function useStoreSelector(form, selector) {
     const data = useSyncExternalStore(form.subscribe, useCallback(() => {
         return form.getData(selector);
-    }, [form, selector]));
+    }, [form, selector]), () => form.getData(selector));
     return [data, form.setData, form];
 }
 
-export { useForm, useFormFocus, useFormList, useFormSelector };
+export { useStore, useStoreFocus, useStoreList, useStoreSelector };

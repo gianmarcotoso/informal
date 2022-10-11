@@ -1,10 +1,10 @@
 import { createFocus } from '../src/create-focus'
-import { createForm } from '../src/create-form'
+import { createStore } from '../src/create-store'
 import { createList } from '../src/create-list'
 
 describe('createList', () => {
 	it('allows to focus on an array within a form', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -20,7 +20,7 @@ describe('createList', () => {
 	})
 
 	it('allows to focus on an array within a form and update the list', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -48,7 +48,7 @@ describe('createList', () => {
 	})
 
 	it('allows the array to be the form root value', () => {
-		const form = createForm([
+		const form = createStore([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jane' },
 		])
@@ -79,7 +79,7 @@ describe('createList', () => {
 	})
 
 	it('allows to add an element to the array', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -98,7 +98,7 @@ describe('createList', () => {
 	})
 
 	it('allows to remove an element from the array', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -113,7 +113,7 @@ describe('createList', () => {
 	})
 
 	it('allows to edit an item in the array by using a path', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -131,7 +131,7 @@ describe('createList', () => {
 	})
 
 	it('allows to replace an item in the array', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -146,7 +146,7 @@ describe('createList', () => {
 	})
 
 	it('allows to edit an item in the array by using a function', () => {
-		const form = createForm({
+		const form = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
@@ -175,7 +175,7 @@ describe('createList', () => {
 	})
 
 	it('allows to create a list from an array of strings', () => {
-		const form = createForm({
+		const form = createStore({
 			users: ['John', 'Jane'],
 		})
 		const usersFocus = createFocus(form, 'users')

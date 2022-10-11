@@ -20,7 +20,7 @@ export interface Getter<T> {
 
 export type Setter<T> = (...args: Args<T>) => void
 
-export type Form<T> = {
+export type Store<T> = {
 	getData: Getter<T>
 	setData: Setter<T>
 	subscribe: (listener: Listener) => Unsubscribe

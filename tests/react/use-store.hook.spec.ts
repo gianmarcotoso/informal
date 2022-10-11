@@ -1,15 +1,15 @@
 import { act, renderHook } from '@testing-library/react'
 
-import { useForm } from '../../src/react/use-form.hook'
+import { useStore } from '../../src/react/use-store.hook'
 import { DeepPartial } from '../../src/types'
 
-type TestFormStateTodo = {
+type TestStoreStateTodo = {
 	completed?: string
 	name: string
 	id: number
 }
 
-type TestFormState = {
+type TestStoreState = {
 	foo: string
 	baz: string
 	num: number
@@ -17,26 +17,26 @@ type TestFormState = {
 	nest: {
 		some: string
 		tags: string[]
-		todos?: TestFormStateTodo[]
+		todos?: TestStoreStateTodo[]
 	}
-	todos: TestFormStateTodo[]
+	todos: TestStoreStateTodo[]
 }
 
 describe('use-form.hook', () => {
 	it('initializes an empty state', () => {
-		const { result } = renderHook(() => useForm<TestFormState>({}))
+		const { result } = renderHook(() => useStore<TestStoreState>({}))
 
 		expect(result.current[0]).toEqual({})
 	})
 
 	it('initializes an empty state even when no initial value is provided', () => {
-		const { result } = renderHook(() => useForm<TestFormState>())
+		const { result } = renderHook(() => useStore<TestStoreState>())
 
 		expect(result.current[0]).toEqual({})
 	})
 
 	it('empties the state to a null value when null is passed to the setter function', () => {
-		const { result } = renderHook(() => useForm<TestFormState>({}))
+		const { result } = renderHook(() => useStore<TestStoreState>({}))
 		const [, setData] = result.current
 
 		act(() => {
@@ -47,7 +47,7 @@ describe('use-form.hook', () => {
 	})
 
 	it('updates the state when the setter function is called with a delta object', () => {
-		const { result } = renderHook(() => useForm<TestFormState>({}))
+		const { result } = renderHook(() => useStore<TestStoreState>({}))
 		const [, setData] = result.current
 
 		act(() => setData({ foo: 'bar' }))
@@ -56,7 +56,7 @@ describe('use-form.hook', () => {
 	})
 
 	it('updates a specific property when the setter function is called with a key and a new value for that key', () => {
-		const { result } = renderHook(() => useForm<TestFormState>({}))
+		const { result } = renderHook(() => useStore<TestStoreState>({}))
 		const [, setData] = result.current
 
 		act(() => setData('foo', 'bar'))
@@ -65,24 +65,24 @@ describe('use-form.hook', () => {
 	})
 
 	it('applies the middleware function passed to as the second parameter of the hook', () => {
-		const middleware = (data: DeepPartial<TestFormState>) => {
+		const middleware = (data: DeepPartial<TestStoreState>) => {
 			data.baz = 'qux'
 
 			return data
 		}
-		const { result } = renderHook(() => useForm<TestFormState>({}, middleware as any))
+		const { result } = renderHook(() => useStore<TestStoreState>({}, middleware as any))
 
 		expect(result.current[0].baz).toBe('qux')
 	})
 
 	it('applies the middleware on every update', () => {
-		const middleware = (data: TestFormState) => {
+		const middleware = (data: TestStoreState) => {
 			data.baz = 'qux'
 			data.num! += 1
 
 			return data
 		}
-		const { result } = renderHook(() => useForm<TestFormState>({ num: 0 }, middleware))
+		const { result } = renderHook(() => useStore<TestStoreState>({ num: 0 }, middleware))
 
 		act(() => {
 			result.current[1]('foo', 'bar')
@@ -94,7 +94,7 @@ describe('use-form.hook', () => {
 	})
 
 	it('updates the value of a nested record when its key is passed using dot notation', () => {
-		const { result } = renderHook(() => useForm<TestFormState>({}))
+		const { result } = renderHook(() => useStore<TestStoreState>({}))
 		const [, setData] = result.current
 
 		act(() => setData('nest.some', 'foo'))
@@ -103,20 +103,20 @@ describe('use-form.hook', () => {
 	})
 
 	it('should not mutate nested objects within the source object when replacing the state', () => {
-		function useFormListHookTest() {
-			const [data, setData] = useForm<TestFormState>({})
+		function useStoreListHookTest() {
+			const [data, setData] = useStore<TestStoreState>({})
 
 			return { data, setData }
 		}
 
-		const originalObject: Partial<TestFormState> = {
+		const originalObject: Partial<TestStoreState> = {
 			nest: {
 				some: 'billy',
 				tags: ['foo'],
 			},
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.setData(originalObject))
 		act(() => result.current.setData('nest.some', 'hello'))

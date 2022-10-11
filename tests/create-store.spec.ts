@@ -1,50 +1,50 @@
-import { createForm } from '../src/create-form'
+import { createStore } from '../src/create-store'
 
-describe('createForm', () => {
+describe('createStore', () => {
 	it('should create a form', () => {
-		const form = createForm()
+		const form = createStore()
 
 		expect(form).toBeDefined()
 	})
 
 	it('should allow to get data', () => {
-		const form = createForm({ name: 'John' })
+		const form = createStore({ name: 'John' })
 
 		expect(form.getData()).toEqual({ name: 'John' })
 	})
 
 	it('should allow to get data nested within the form', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 
 		expect(form.getData('address', 'city')).toEqual('New York')
 	})
 
 	it('should allow to use dot notation to get nested data within the form', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 
 		expect(form.getData('address.city')).toEqual('New York')
 	})
 
 	it('should support numbers to reference elements at a specific index within an array', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' }, todos: [{ id: 1, title: 'Buy food' }] })
+		const form = createStore({ name: 'John', address: { city: 'New York' }, todos: [{ id: 1, title: 'Buy food' }] })
 
 		expect(form.getData('todos.0.title')).toEqual('Buy food')
 	})
 
 	it('should support mixing path elements and dot notation', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' }, todos: [{ id: 1, title: 'Buy food' }] })
+		const form = createStore({ name: 'John', address: { city: 'New York' }, todos: [{ id: 1, title: 'Buy food' }] })
 
 		expect(form.getData('todos', '0.title')).toEqual('Buy food')
 	})
 
 	it('should allow to get data using a selector', () => {
-		const form = createForm({ name: 'John', address: { city: 'New York' } })
+		const form = createStore({ name: 'John', address: { city: 'New York' } })
 
 		expect(form.getData((data) => data.address.city)).toEqual('New York')
 	})
 
 	it('should allow to set data', () => {
-		const form = createForm({ name: 'John' })
+		const form = createStore({ name: 'John' })
 
 		form.setData({ name: 'Jane' })
 
@@ -52,7 +52,7 @@ describe('createForm', () => {
 	})
 
 	it('should allow to set data using a producer function', () => {
-		const form = createForm({ name: 'John' })
+		const form = createStore({ name: 'John' })
 
 		form.setData((data: any) => ({ name: 'Jane' }))
 
@@ -60,7 +60,7 @@ describe('createForm', () => {
 	})
 
 	it('should allow to set data on a specific path', () => {
-		const form = createForm({ user: { name: 'John' } })
+		const form = createStore({ user: { name: 'John' } })
 
 		form.setData('user', { name: 'Jane' })
 		expect(form.getData()).toEqual({ user: { name: 'Jane' } })
@@ -73,7 +73,7 @@ describe('createForm', () => {
 	})
 
 	it('should replace data when setting on a specific key', () => {
-		const form = createForm({ user: { name: 'John' } })
+		const form = createStore({ user: { name: 'John' } })
 
 		form.setData('user.age', 25)
 		expect(form.getData()).toEqual({ user: { name: 'John', age: 25 } })
@@ -83,7 +83,7 @@ describe('createForm', () => {
 	})
 
 	it('should support updating elements of an array', () => {
-		const form = createForm({ users: [{ name: 'John' }, { name: 'Jane' }] })
+		const form = createStore({ users: [{ name: 'John' }, { name: 'Jane' }] })
 
 		form.setData('users.0.name', 'Billy')
 		expect(form.getData()).toEqual({ users: [{ name: 'Billy' }, { name: 'Jane' }] })
@@ -93,7 +93,7 @@ describe('createForm', () => {
 	})
 
 	it('should allow to update data by using a function', () => {
-		const form = createForm({ user: { name: 'John' } })
+		const form = createStore({ user: { name: 'John' } })
 
 		form.setData('user.name', (name: string) => name.toUpperCase())
 		expect(form.getData()).toEqual({ user: { name: 'JOHN' } })
@@ -113,7 +113,7 @@ describe('createForm', () => {
 	})
 
 	it('should notify all listeners when the form changes', () => {
-		const form = createForm({ name: 'John' })
+		const form = createStore({ name: 'John' })
 		const listener = jest.fn()
 		const listener2 = jest.fn()
 
@@ -127,7 +127,7 @@ describe('createForm', () => {
 	})
 
 	it('a listener should be able to call getData to get a fresh version of the form', () => {
-		const form = createForm({ name: 'John' })
+		const form = createStore({ name: 'John' })
 		const listener = jest.fn(() => {
 			expect(form.getData()).toEqual({ name: 'Jane' })
 		})
@@ -140,7 +140,7 @@ describe('createForm', () => {
 	})
 
 	it('a listener should no longer be called after being unsubscribed', () => {
-		const form = createForm({ name: 'John' })
+		const form = createStore({ name: 'John' })
 		const listener = jest.fn()
 
 		const unsubscribe = form.subscribe(listener)
@@ -163,7 +163,7 @@ describe('createForm', () => {
 				version: 2,
 			}
 		})
-		const form = createForm({ name: 'John' }, middleware as any)
+		const form = createStore({ name: 'John' }, middleware as any)
 
 		expect(middleware).toHaveBeenCalled()
 		expect(form.getData()).toEqual({ name: 'John', version: 2 })
@@ -176,7 +176,7 @@ describe('createForm', () => {
 				version: 2,
 			}
 		})
-		const form = createForm({ name: 'John' }, middleware as any)
+		const form = createStore({ name: 'John' }, middleware as any)
 
 		form.setData({ name: 'Jane' })
 
@@ -188,7 +188,7 @@ describe('createForm', () => {
 		const middleware = jest.fn((data: any) => {
 			data.name = data.name.toUpperCase()
 		})
-		const form = createForm({ name: 'John' }, middleware as any)
+		const form = createStore({ name: 'John' }, middleware as any)
 
 		form.setData({ name: 'Jane' })
 
@@ -197,7 +197,7 @@ describe('createForm', () => {
 	})
 
 	it('should support an array as content for the form, instead of an object', () => {
-		const form = createForm(['John', 'Jane'])
+		const form = createStore(['John', 'Jane'])
 
 		expect(form.getData()).toEqual(['John', 'Jane'])
 		expect(form.getData(0)).toEqual('John')
@@ -208,7 +208,7 @@ describe('createForm', () => {
 	})
 
 	it('should support a primitive type such as a string as the content for the form, instead of an object', () => {
-		const form = createForm('John')
+		const form = createStore('John')
 
 		expect(form.getData()).toEqual('John')
 

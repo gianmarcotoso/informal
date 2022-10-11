@@ -1,17 +1,17 @@
 import { renderHook } from '@testing-library/react'
-import { createForm } from '../../src/create-form'
-import { useFormSelector } from '../../src/react/use-form-selector.hook'
+import { createStore } from '../../src/create-store'
+import { useStoreSelector } from '../../src/react/use-store-selector.hook'
 import { createSelector } from 'reselect'
 
-describe('useFormSelector', () => {
+describe('useStoreSelector', () => {
 	it('allows to access a form using a selector', () => {
 		const { result } = renderHook(() => {
-			const form = createForm({ name: 'John', address: { city: 'New York' } })
+			const form = createStore({ name: 'John', address: { city: 'New York' } })
 			const citySelector = createSelector(
 				(data: any) => data.address.city,
 				(city) => city.toUpperCase(),
 			)
-			return useFormSelector(form, citySelector)
+			return useStoreSelector(form, citySelector)
 		})
 
 		expect(result.current[0]).toEqual('NEW YORK')

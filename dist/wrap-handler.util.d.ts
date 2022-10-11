@@ -1,1 +1,1 @@
-export declare function wrapHandler(setter: CallableFunction): (event: Event) => void;
+export declare function wrapHandler<T extends Event>(setter: CallableFunction): (event: T) => void;

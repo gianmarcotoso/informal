@@ -1,16 +1,16 @@
 import { act, renderHook } from '@testing-library/react'
 
 import { createFocus } from '../../src/create-focus'
-import { useFormList } from '../../src/react/use-form-list.hook'
-import { useForm } from '../../src/react/use-form.hook'
+import { useStoreList } from '../../src/react/use-store-list.hook'
+import { useStore } from '../../src/react/use-store.hook'
 
-type TestFormStateTodo = {
+type TestStoreStateTodo = {
 	completed?: string
 	name: string
 	id: number
 }
 
-type TestFormState = {
+type TestStoreState = {
 	foo: string
 	baz: string
 	num: number
@@ -18,56 +18,56 @@ type TestFormState = {
 	nest: {
 		some: string
 		tags: string[]
-		todos?: TestFormStateTodo[]
+		todos?: TestStoreStateTodo[]
 	}
-	todos: TestFormStateTodo[]
+	todos: TestStoreStateTodo[]
 }
 
-describe('useFormList', () => {
-	it('allows to focus on an array using the useFormList hook', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+describe('useStoreList', () => {
+	it('allows to focus on an array using the useStoreList hook', () => {
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				todos: [],
 			})
 			const todosFocus = createFocus(form, 'todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		expect(result.current.todos).toHaveLength(0)
 		expect(result.current.todos).toBe(result.current.data.todos)
 	})
 
 	it('allows to focus on an array even when the array has not yet been initialized', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({})
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({})
 			const todosFocus = createFocus(form, 'todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		expect(result.current.todos).toHaveLength(0)
 		expect(result.current.data.todos).toBeUndefined()
 	})
 
 	it('allows to add an item on a focused array', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				todos: [],
 			})
 			const todosFocus = createFocus(form, 'todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.todosHandlers.addItem({ id: 1, name: 'foo' }))
 
@@ -76,20 +76,20 @@ describe('useFormList', () => {
 	})
 
 	it('allows to edit an item on a focused array', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				todos: [
 					{ id: 1, name: 'foo' },
 					{ id: 2, name: 'bar' },
 				],
 			})
 			const todosFocus = createFocus(form, 'todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.todosHandlers.updateItem(result.current.todos[0], 'name', 'baz'))
 
@@ -98,20 +98,20 @@ describe('useFormList', () => {
 	})
 
 	it('allows to remove an item on a focused array', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				todos: [
 					{ id: 1, name: 'foo' },
 					{ id: 2, name: 'bar' },
 				],
 			})
 			const todosFocus = createFocus(form, 'todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.todosHandlers.removeItem(result.current.todos[0]))
 
@@ -119,19 +119,19 @@ describe('useFormList', () => {
 	})
 
 	it('allows to add a value when the focused array contains strings', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				nest: {
 					tags: [],
 				},
 			})
 			const tagsFocus = createFocus(form, 'nest.tags')
-			const [tags, tagsHandlers] = useFormList(tagsFocus, (i: any) => i)
+			const [tags, tagsHandlers] = useStoreList(tagsFocus, (i: any) => i)
 
 			return { data, tags, setData, tagsHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.tagsHandlers.addItem('foo'))
 
@@ -140,8 +140,8 @@ describe('useFormList', () => {
 	})
 
 	it('allows to replace a value on a focused nested array of objects', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				nest: {
 					todos: [
 						{ id: 1, name: 'foo' },
@@ -150,12 +150,12 @@ describe('useFormList', () => {
 				},
 			})
 			const todosFocus = createFocus(form, 'nest.todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.todosHandlers.updateItem({ id: 1, name: 'bar' }, { id: 7, name: 'baz' }))
 
@@ -164,20 +164,20 @@ describe('useFormList', () => {
 	})
 
 	it('does nothing when attempting to edit a non existing item', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				todos: [
 					{ id: 1, name: 'foo' },
 					{ id: 2, name: 'bar' },
 				],
 			})
 			const todosFocus = createFocus(form, 'todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.todosHandlers.updateItem({ id: 3, name: 'baz' }, 'name', 'qux'))
 
@@ -186,19 +186,19 @@ describe('useFormList', () => {
 	})
 
 	it('allows to remove a value on a focused nested array of strings', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				nest: {
 					tags: ['foo', 'bar'],
 				},
 			})
 			const tagsFocus = createFocus(form, 'nest.tags')
-			const [tags, tagsHandlers] = useFormList(tagsFocus)
+			const [tags, tagsHandlers] = useStoreList(tagsFocus)
 
 			return { data, tags, setData, tagsHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.tagsHandlers.removeItem('foo'))
 
@@ -207,8 +207,8 @@ describe('useFormList', () => {
 	})
 
 	it('allows to remove a value on a focused nested array of objects', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				nest: {
 					todos: [
 						{ id: 1, name: 'foo' },
@@ -217,12 +217,12 @@ describe('useFormList', () => {
 				},
 			})
 			const todosFocus = createFocus(form, 'nest.todos')
-			const [todos, todosHandlers] = useFormList(todosFocus, (i: any) => i.id)
+			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => result.current.todosHandlers.removeItem({ id: 1, name: 'foo' }))
 

@@ -2,9 +2,9 @@ import { produce } from 'immer'
 import { clone, identity, last, lensPath, set, view } from 'ramda'
 
 import { normalizePath } from './normalize-path.util'
-import { Args, DeepPartial, Form, Listener, Producer, PathElement, Selector } from './types'
+import { Args, DeepPartial, Store, Listener, Producer, PathElement, Selector } from './types'
 
-export function createForm<T>(initialState: DeepPartial<T> = {}, middleware: Producer<T> = identity): Form<T> {
+export function createStore<T>(initialState: DeepPartial<T> = {}, middleware: Producer<T> = identity): Store<T> {
 	let data = produce(initialState, middleware)
 	const listeners = new Set<Listener>()
 

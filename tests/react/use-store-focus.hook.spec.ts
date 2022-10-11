@@ -1,15 +1,15 @@
 import { act, renderHook } from '@testing-library/react'
 
-import { useFormFocus } from '../../src/react/use-form-focus.hook'
-import { useForm } from '../../src/react/use-form.hook'
+import { useStoreFocus } from '../../src/react/use-store-focus.hook'
+import { useStore } from '../../src/react/use-store.hook'
 
-type TestFormStateTodo = {
+type TestStoreStateTodo = {
 	completed?: string
 	name: string
 	id: number
 }
 
-type TestFormState = {
+type TestStoreState = {
 	foo: string
 	baz: string
 	num: number
@@ -17,21 +17,21 @@ type TestFormState = {
 	nest: {
 		some: string
 		tags: string[]
-		todos?: TestFormStateTodo[]
+		todos?: TestStoreStateTodo[]
 	}
-	todos: TestFormStateTodo[]
+	todos: TestStoreStateTodo[]
 }
 
-describe('useFormFocus', () => {
-	it('allows to focus on a nested object using the useFormFocus hook', () => {
-		function useNestedFormHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({})
-			const [nestedData, setNestedData] = useFormFocus(form, 'nest')
+describe('useStoreFocus', () => {
+	it('allows to focus on a nested object using the useStoreFocus hook', () => {
+		function useNestedStoreHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({})
+			const [nestedData, setNestedData] = useStoreFocus(form, 'nest')
 
 			return { data, nestedData, setData, setNestedData }
 		}
 
-		const { result } = renderHook(() => useNestedFormHookTest())
+		const { result } = renderHook(() => useNestedStoreHookTest())
 
 		act(() => result.current.setNestedData('some', 'foo'))
 
@@ -40,20 +40,20 @@ describe('useFormFocus', () => {
 		expect(result.current.data.nest).toBe(result.current.nestedData)
 	})
 
-	it('allows to reset the state of a nested object using the useNestedForm hook', () => {
-		function useNestedFormHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+	it('allows to reset the state of a nested object using the useNestedStore hook', () => {
+		function useNestedStoreHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				foo: 'foo',
 				nest: {
 					some: 'bar',
 				},
 			})
-			const [nestedData, setNestedData] = useFormFocus(form, 'nest')
+			const [nestedData, setNestedData] = useStoreFocus(form, 'nest')
 
 			return { data, nestedData, setData, setNestedData }
 		}
 
-		const { result } = renderHook(() => useNestedFormHookTest())
+		const { result } = renderHook(() => useNestedStoreHookTest())
 
 		act(() => result.current.setNestedData({ some: 'baz' }))
 
@@ -63,37 +63,37 @@ describe('useFormFocus', () => {
 	})
 
 	it('should allow to focus on an item of an array of objects', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				nest: {
 					todos: [{ id: Math.random(), name: 'foo' }],
 				},
 			})
 
-			const [todo, todoHandlers] = useFormFocus(form, 'nest.todos.0')
+			const [todo, todoHandlers] = useStoreFocus(form, 'nest.todos.0')
 
 			return { data, todo, setData, todoHandlers }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		expect(result.current.todo).toHaveProperty('name', 'foo')
 	})
 
 	it('should allow to edit a focused item of an array of objects', () => {
-		function useFormListHookTest() {
-			const [data, setData, form] = useForm<TestFormState>({
+		function useStoreListHookTest() {
+			const [data, setData, form] = useStore<TestStoreState>({
 				nest: {
 					todos: [{ id: Math.random(), name: 'foo' }],
 				},
 			})
 
-			const [todo, onChangeTodo] = useFormFocus(form, 'nest.todos.0')
+			const [todo, onChangeTodo] = useStoreFocus(form, 'nest.todos.0')
 
 			return { data, todo, setData, onChangeTodo }
 		}
 
-		const { result } = renderHook(() => useFormListHookTest())
+		const { result } = renderHook(() => useStoreListHookTest())
 
 		act(() => {
 			result.current.onChangeTodo('name', 'bar')

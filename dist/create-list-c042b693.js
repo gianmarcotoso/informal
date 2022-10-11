@@ -15,7 +15,7 @@ function normalizePath(...path) {
     return flatten(path.map((p) => normalizePathElement(p)));
 }
 
-function createForm(initialState = {}, middleware = identity) {
+function createStore(initialState = {}, middleware = identity) {
     let data = produce(initialState, middleware);
     const listeners = new Set();
     function onUpdate() {
@@ -56,7 +56,7 @@ function createForm(initialState = {}, middleware = identity) {
     };
 }
 
-function createFocus(Form, ...path) {
+function createFocus(store, ...path) {
     const listeners = new Set();
     function onUpdate() {
         for (const listener of listeners) {
@@ -66,12 +66,12 @@ function createFocus(Form, ...path) {
     function getData(...args) {
         if (args.length === 1 && typeof args[0] === 'function') {
             const [selector] = args;
-            return selector(Form.getData(...path));
+            return selector(store.getData(...path));
         }
-        return Form.getData(...[...path, ...args]);
+        return store.getData(...[...path, ...args]);
     }
     function setData(...args) {
-        Form.setData(...[...path, ...args]);
+        store.setData(...[...path, ...args]);
         onUpdate();
     }
     function subscribe(listener) {
@@ -115,4 +115,4 @@ function createList(form, id = identity) {
     };
 }
 
-export { createFocus as a, createList as b, createForm as c, normalizePath as n };
+export { createFocus as a, createList as b, createStore as c, normalizePath as n };

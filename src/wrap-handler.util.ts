@@ -1,7 +1,7 @@
 import { normalizePath } from './normalize-path.util'
 
-export function wrapHandler(setter: CallableFunction) {
-	return function eventHandler(event: Event) {
+export function wrapHandler<T extends Event>(setter: CallableFunction) {
+	return function eventHandler(event: T) {
 		const target = event.target as HTMLInputElement
 		const { name, type, value, checked } = target
 

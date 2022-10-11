@@ -1,10 +1,10 @@
-import { Args, Form, List } from '../types'
+import { Args, Store, List } from '../types'
 import { identity } from 'ramda'
 import { useRef, useSyncExternalStore } from 'react'
 import { createList } from '../create-list'
 
-export function useFormList<T, K>(
-	form: Form<T>,
+export function useStoreList<T, K>(
+	form: Store<T>,
 	id: CallableFunction = identity,
 ): [
 	K[],
@@ -17,7 +17,7 @@ export function useFormList<T, K>(
 	List<K>,
 ] {
 	const { current: list } = useRef(createList<T, K>(form, id))
-	const items = useSyncExternalStore(form.subscribe, list.getItems)
+	const items = useSyncExternalStore(form.subscribe, list.getItems, list.getItems)
 
 	return [
 		items,

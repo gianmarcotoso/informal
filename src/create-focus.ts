@@ -1,6 +1,6 @@
-import { Args, Form, Listener, PathElement, Selector } from './types'
+import { Args, Store, Listener, PathElement, Selector } from './types'
 
-export function createFocus<T, K>(Form: Form<T>, ...path: PathElement[]): Form<K> {
+export function createFocus<T, K>(store: Store<T>, ...path: PathElement[]): Store<K> {
 	const listeners = new Set<Listener>()
 
 	function onUpdate() {
@@ -13,14 +13,14 @@ export function createFocus<T, K>(Form: Form<T>, ...path: PathElement[]): Form<K
 		if (args.length === 1 && typeof args[0] === 'function') {
 			const [selector] = args
 
-			return selector(Form.getData(...path) as K)
+			return selector(store.getData(...path) as K)
 		}
 
-		return Form.getData(...([...path, ...args] as PathElement[]))
+		return store.getData(...([...path, ...args] as PathElement[]))
 	}
 
 	function setData(...args: Args<K>) {
-		Form.setData(...[...path, ...args])
+		store.setData(...[...path, ...args])
 
 		onUpdate()
 	}

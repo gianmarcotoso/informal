@@ -1,8 +1,8 @@
 import { identity } from 'ramda'
 
-import { Args, Form, List } from './types'
+import { Args, Store, List } from './types'
 
-export function createList<T, K>(form: Form<T>, id: CallableFunction = identity): List<K> {
+export function createList<T, K>(form: Store<T>, id: CallableFunction = identity): List<K> {
 	const emptyList: K[] = []
 
 	function getItems(): K[] {
