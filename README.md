@@ -645,7 +645,7 @@ function HugeTable() {
 }
 ```
 
-**Note:** the selector function should return either a primitive value or a _stable_ reference, so avoid returning new objects/arrays from the selector or consider using using a library such as [`reselect`](https://github.com/reduxjs/reselect) to create a memoized selector. Not following this rule advice may cause React to throw a "Maximum update depth exceeded" error.
+**Note:** the selector function should return either a primitive value or a _stable_ reference, so avoid returning new objects/arrays from the selector or consider using using a library such as [`reselect`](https://github.com/reduxjs/reselect) to create a memoized selector. Not following this advice may cause React to throw a "Maximum update depth exceeded" error.
 
 ## FAQ
 
