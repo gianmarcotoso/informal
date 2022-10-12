@@ -216,4 +216,30 @@ describe('createStore', () => {
 
 		expect(form.getData()).toEqual('Jane')
 	})
+
+	it('should update values correctly with subsequent fast updates', () => {
+		const form = createStore({ number: 0 })
+
+		for (let i = 0; i < 100; i++) {
+			form.setData({ number: i })
+		}
+
+		expect(form.getData()).toEqual({ number: 99 })
+
+		form.setData({ number: 0 })
+		for (let i = 0; i < 100; i++) {
+			form.setData('number', (n: number) => n + 1)
+		}
+
+		expect(form.getData()).toEqual({ number: 100 })
+
+		form.setData({ number: 0 })
+		for (let i = 0; i < 100; i++) {
+			form.setData((data: any) => {
+				data.number++
+			})
+		}
+
+		expect(form.getData()).toEqual({ number: 100 })
+	})
 })
