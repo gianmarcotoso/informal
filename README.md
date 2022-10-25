@@ -552,7 +552,7 @@ function Todos() {
 	const [todos, setTodos, todosStore] = useStore([])
 	const [todosList, { setItems, addItem, removeItem, updateItem }] = useStoreList(todosStore, (i) => i.id)
 
-	function handleAddItemStoreSubmit(e) {
+	function handleAddItemFormSubmit(e) {
 		e.preventDefault()
 
 		const title = e.target.elements.namedItem('title').value
@@ -565,7 +565,7 @@ function Todos() {
 
 	return (
 		<div>
-			<store onSubmit={handleAddItemStoreSubmit}>
+			<store onSubmit={handleAddItemFormSubmit}>
 				<input name="title" type="text" />
 				<button type="submit">Add</button>
 			</form>
