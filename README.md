@@ -440,10 +440,10 @@ function MyStore() {
 	}
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={handleInputChange} />
 			<input name="age" type="number" value={data.age} onChange={handleInputChange} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -461,10 +461,10 @@ function MyStore() {
 	})
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={wrapHandler(setData)} />
 			<input name="age" type="number" value={data.age} onChange={wrapHandler(setData)} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -486,12 +486,12 @@ function MyStore() {
 	})
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={wrapHandler(setData)} />
 			<input name="age" type="number" value={data.age} onChange={wrapHandler(setData)} />
 			<input name="address.street" type="text" value={data.address.street} onChange={wrapHandler(setData)} />
 			<input name="address.city" type="text" value={data.address.city} onChange={wrapHandler(setData)} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -530,12 +530,12 @@ function MyStore() {
 	const [address, setAddress, addressFocus] = useStoreFocus(store, 'address')
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={wrapHandler(setData)} />
 			<input name="age" type="number" value={data.age} onChange={wrapHandler(setData)} />
 			<input name="street" type="text" value={address.street} onChange={wrapHandler(setAddress)} />
 			<input name="city" type="text" value={address.city} onChange={wrapHandler(setAddress)} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -568,7 +568,7 @@ function Todos() {
 			<store onSubmit={handleAddItemStoreSubmit}>
 				<input name="title" type="text" />
 				<button type="submit">Add</button>
-			</store>
+			</form>
 			<button onClick={handleResetItems}>Reset</button>
 			<ul>
 				{todosList.map((todo) => {
