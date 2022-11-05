@@ -7,8 +7,8 @@ export function useStore<T>(
 	initialState: DeepPartial<T> = {} as T,
 	middleware: Producer<T> = identity,
 ): [T, Setter<T>, Store<T>] {
-	const { current: form } = useRef(createStore<T>(initialState, middleware))
-	const data = useSyncExternalStore(form.subscribe, form.getData, form.getData)
+	const { current: store } = useRef(createStore<T>(initialState, middleware))
+	const data = useSyncExternalStore(store.subscribe, store.getData, store.getData)
 
-	return [data, form.setData, form]
+	return [data, store.setData, store]
 }

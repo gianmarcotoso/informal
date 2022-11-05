@@ -4,7 +4,7 @@ import { useRef, useSyncExternalStore } from 'react'
 import { createList } from '../create-list'
 
 export function useStoreList<T, K>(
-	form: Store<T>,
+	store: Store<T>,
 	id: CallableFunction = identity,
 ): [
 	K[],
@@ -16,8 +16,8 @@ export function useStoreList<T, K>(
 	},
 	List<K>,
 ] {
-	const { current: list } = useRef(createList<T, K>(form, id))
-	const items = useSyncExternalStore(form.subscribe, list.getItems, list.getItems)
+	const { current: list } = useRef(createList<T, K>(store, id))
+	const items = useSyncExternalStore(store.subscribe, list.getItems, list.getItems)
 
 	return [
 		items,

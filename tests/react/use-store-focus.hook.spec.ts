@@ -25,8 +25,8 @@ type TestStoreState = {
 describe('useStoreFocus', () => {
 	it('allows to focus on a nested object using the useStoreFocus hook', () => {
 		function useNestedStoreHookTest() {
-			const [data, setData, form] = useStore<TestStoreState>({})
-			const [nestedData, setNestedData] = useStoreFocus(form, 'nest')
+			const [data, setData, store] = useStore<TestStoreState>({})
+			const [nestedData, setNestedData] = useStoreFocus(store, 'nest')
 
 			return { data, nestedData, setData, setNestedData }
 		}
@@ -42,13 +42,13 @@ describe('useStoreFocus', () => {
 
 	it('allows to reset the state of a nested object using the useNestedStore hook', () => {
 		function useNestedStoreHookTest() {
-			const [data, setData, form] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<TestStoreState>({
 				foo: 'foo',
 				nest: {
 					some: 'bar',
 				},
 			})
-			const [nestedData, setNestedData] = useStoreFocus(form, 'nest')
+			const [nestedData, setNestedData] = useStoreFocus(store, 'nest')
 
 			return { data, nestedData, setData, setNestedData }
 		}
@@ -64,13 +64,13 @@ describe('useStoreFocus', () => {
 
 	it('should allow to focus on an item of an array of objects', () => {
 		function useStoreListHookTest() {
-			const [data, setData, form] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<TestStoreState>({
 				nest: {
 					todos: [{ id: Math.random(), name: 'foo' }],
 				},
 			})
 
-			const [todo, todoHandlers] = useStoreFocus(form, 'nest.todos.0')
+			const [todo, todoHandlers] = useStoreFocus(store, 'nest.todos.0')
 
 			return { data, todo, setData, todoHandlers }
 		}
@@ -82,13 +82,13 @@ describe('useStoreFocus', () => {
 
 	it('should allow to edit a focused item of an array of objects', () => {
 		function useStoreListHookTest() {
-			const [data, setData, form] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<TestStoreState>({
 				nest: {
 					todos: [{ id: Math.random(), name: 'foo' }],
 				},
 			})
 
-			const [todo, onChangeTodo] = useStoreFocus(form, 'nest.todos.0')
+			const [todo, onChangeTodo] = useStoreFocus(store, 'nest.todos.0')
 
 			return { data, todo, setData, onChangeTodo }
 		}

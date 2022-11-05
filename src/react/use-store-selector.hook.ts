@@ -2,14 +2,14 @@ import { useCallback, useSyncExternalStore } from 'react'
 
 import { Store, Selector, Setter } from '../types'
 
-export function useStoreSelector<T>(form: Store<T>, selector: Selector<T>): [any, Setter<T>, Store<T>] {
+export function useStoreSelector<T>(store: Store<T>, selector: Selector<T>): [any, Setter<T>, Store<T>] {
 	const data = useSyncExternalStore(
-		form.subscribe,
+		store.subscribe,
 		useCallback(() => {
-			return form.getData(selector)
-		}, [form, selector]),
-		() => form.getData(selector),
+			return store.getData(selector)
+		}, [store, selector]),
+		() => store.getData(selector),
 	)
 
-	return [data, form.setData, form]
+	return [data, store.setData, store]
 }

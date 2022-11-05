@@ -22,7 +22,7 @@ type TestStoreState = {
 	todos: TestStoreStateTodo[]
 }
 
-describe('use-form.hook', () => {
+describe('use-store.hook', () => {
 	it('initializes an empty state', () => {
 		const { result } = renderHook(() => useStore<TestStoreState>({}))
 

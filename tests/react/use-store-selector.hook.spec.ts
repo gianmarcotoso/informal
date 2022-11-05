@@ -4,14 +4,14 @@ import { useStoreSelector } from '../../src/react/use-store-selector.hook'
 import { createSelector } from 'reselect'
 
 describe('useStoreSelector', () => {
-	it('allows to access a form using a selector', () => {
+	it('allows to access a store using a selector', () => {
 		const { result } = renderHook(() => {
-			const form = createStore({ name: 'John', address: { city: 'New York' } })
+			const store = createStore({ name: 'John', address: { city: 'New York' } })
 			const citySelector = createSelector(
 				(data: any) => data.address.city,
 				(city) => city.toUpperCase(),
 			)
-			return useStoreSelector(form, citySelector)
+			return useStoreSelector(store, citySelector)
 		})
 
 		expect(result.current[0]).toEqual('NEW YORK')

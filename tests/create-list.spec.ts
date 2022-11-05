@@ -3,14 +3,14 @@ import { createStore } from '../src/create-store'
 import { createList } from '../src/create-list'
 
 describe('createList', () => {
-	it('allows to focus on an array within a form', () => {
-		const form = createStore({
+	it('allows to focus on an array within a store', () => {
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		expect(usersList.getItems()).toEqual([
@@ -19,14 +19,14 @@ describe('createList', () => {
 		])
 	})
 
-	it('allows to focus on an array within a form and update the list', () => {
-		const form = createStore({
+	it('allows to focus on an array within a store and update the list', () => {
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		usersList.setItems([
@@ -40,19 +40,19 @@ describe('createList', () => {
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
 		])
-		expect(form.getData('users')).toEqual([
+		expect(store.getData('users')).toEqual([
 			{ id: 1, name: 'Billy' },
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
 		])
 	})
 
-	it('allows the array to be the form root value', () => {
-		const form = createStore([
+	it('allows the array to be the store root value', () => {
+		const store = createStore([
 			{ id: 1, name: 'John' },
 			{ id: 2, name: 'Jane' },
 		])
-		const usersList = createList(form, (user: any) => user.id)
+		const usersList = createList(store, (user: any) => user.id)
 
 		expect(usersList.getItems()).toEqual([
 			{ id: 1, name: 'John' },
@@ -71,7 +71,7 @@ describe('createList', () => {
 			{ id: 3, name: 'Bob' },
 		])
 
-		expect(form.getData()).toEqual([
+		expect(store.getData()).toEqual([
 			{ id: 1, name: 'Billy' },
 			{ id: 2, name: 'Jack' },
 			{ id: 3, name: 'Bob' },
@@ -79,13 +79,13 @@ describe('createList', () => {
 	})
 
 	it('allows to add an element to the array', () => {
-		const form = createStore({
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		usersList.addItem({ id: 3, name: 'Billy' })
@@ -98,13 +98,13 @@ describe('createList', () => {
 	})
 
 	it('allows to remove an element from the array', () => {
-		const form = createStore({
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		usersList.removeItem({ id: 2, name: 'Jane' })
@@ -113,13 +113,13 @@ describe('createList', () => {
 	})
 
 	it('allows to edit an item in the array by using a path', () => {
-		const form = createStore({
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		usersList.updateItem({ id: 2, name: 'Jane' }, 'name', 'Jack')
@@ -131,13 +131,13 @@ describe('createList', () => {
 	})
 
 	it('allows to replace an item in the array', () => {
-		const form = createStore({
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		usersList.updateItem({ id: 2, name: 'Jane' }, { name: 'Jack' })
@@ -146,13 +146,13 @@ describe('createList', () => {
 	})
 
 	it('allows to edit an item in the array by using a function', () => {
-		const form = createStore({
+		const store = createStore({
 			users: [
 				{ id: 1, name: 'John' },
 				{ id: 2, name: 'Jane' },
 			],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus, (user: any) => user.id)
 
 		usersList.updateItem({ id: 2, name: 'Jane' }, (user: any) => {
@@ -175,10 +175,10 @@ describe('createList', () => {
 	})
 
 	it('allows to create a list from an array of strings', () => {
-		const form = createStore({
+		const store = createStore({
 			users: ['John', 'Jane'],
 		})
-		const usersFocus = createFocus(form, 'users')
+		const usersFocus = createFocus(store, 'users')
 		const usersList = createList(usersFocus)
 
 		expect(usersList.getItems()).toEqual(['John', 'Jane'])
