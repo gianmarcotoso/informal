@@ -440,10 +440,10 @@ function MyStore() {
 	}
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={handleInputChange} />
 			<input name="age" type="number" value={data.age} onChange={handleInputChange} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -461,10 +461,10 @@ function MyStore() {
 	})
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={wrapHandler(setData)} />
 			<input name="age" type="number" value={data.age} onChange={wrapHandler(setData)} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -486,12 +486,12 @@ function MyStore() {
 	})
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={wrapHandler(setData)} />
 			<input name="age" type="number" value={data.age} onChange={wrapHandler(setData)} />
 			<input name="address.street" type="text" value={data.address.street} onChange={wrapHandler(setData)} />
 			<input name="address.city" type="text" value={data.address.city} onChange={wrapHandler(setData)} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -530,12 +530,12 @@ function MyStore() {
 	const [address, setAddress, addressFocus] = useStoreFocus(store, 'address')
 
 	return (
-		<store>
+		<form>
 			<input name="name" type="text" value={data.name} onChange={wrapHandler(setData)} />
 			<input name="age" type="number" value={data.age} onChange={wrapHandler(setData)} />
 			<input name="street" type="text" value={address.street} onChange={wrapHandler(setAddress)} />
 			<input name="city" type="text" value={address.city} onChange={wrapHandler(setAddress)} />
-		</store>
+		</form>
 	)
 }
 ```
@@ -552,7 +552,7 @@ function Todos() {
 	const [todos, setTodos, todosStore] = useStore([])
 	const [todosList, { setItems, addItem, removeItem, updateItem }] = useStoreList(todosStore, (i) => i.id)
 
-	function handleAddItemStoreSubmit(e) {
+	function handleAddItemFormSubmit(e) {
 		e.preventDefault()
 
 		const title = e.target.elements.namedItem('title').value
@@ -565,10 +565,10 @@ function Todos() {
 
 	return (
 		<div>
-			<store onSubmit={handleAddItemStoreSubmit}>
+			<store onSubmit={handleAddItemFormSubmit}>
 				<input name="title" type="text" />
 				<button type="submit">Add</button>
-			</store>
+			</form>
 			<button onClick={handleResetItems}>Reset</button>
 			<ul>
 				{todosList.map((todo) => {
@@ -645,7 +645,7 @@ function HugeTable() {
 }
 ```
 
-**Note:** the selector function should return either a primitive value or a _stable_ reference, so avoid returning new objects/arrays from the selector or consider using using a library such as [`reselect`](https://github.com/reduxjs/reselect) to create a memoized selector. Not following this rule advice may cause React to throw a "Maximum update depth exceeded" error.
+**Note:** the selector function should return either a primitive value or a _stable_ reference, so avoid returning new objects/arrays from the selector or consider using using a library such as [`reselect`](https://github.com/reduxjs/reselect) to create a memoized selector. Not following this advice may cause React to throw a "Maximum update depth exceeded" error.
 
 ## FAQ
 

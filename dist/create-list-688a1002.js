@@ -85,24 +85,24 @@ function createFocus(store, ...path) {
     };
 }
 
-function createList(form, id = identity) {
+function createList(store, id = identity) {
     const emptyList = [];
     function getItems() {
         var _a;
-        return (_a = form.getData()) !== null && _a !== void 0 ? _a : emptyList;
+        return (_a = store.getData()) !== null && _a !== void 0 ? _a : emptyList;
     }
     function setItems(list) {
-        form.setData(list);
+        store.setData(list);
     }
     function addItem(item) {
-        form.setData((list) => [...list, item]);
+        store.setData((list) => [...list, item]);
     }
     function updateItem(item, ...args) {
         const index = getItems().findIndex((i) => id(i) === id(item));
-        form.setData(index, ...args);
+        store.setData(index, ...args);
     }
     function removeItem(item) {
-        form.setData((list) => {
+        store.setData((list) => {
             return list.filter((x) => id(x) !== id(item));
         });
     }

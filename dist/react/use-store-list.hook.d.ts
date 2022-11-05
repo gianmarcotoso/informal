@@ -1,5 +1,5 @@
 import { Args, Store, List } from '../types';
-export declare function useStoreList<T, K>(form: Store<T>, id?: CallableFunction): [
+export declare function useStoreList<T, K>(store: Store<T>, id?: CallableFunction): [
     K[],
     {
         addItem: (item: K) => void;

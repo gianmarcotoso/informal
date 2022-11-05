@@ -1,23 +1,23 @@
 import { identity } from 'ramda';
 import { useRef, useSyncExternalStore, useMemo, useCallback } from 'react';
-import { c as createStore, a as createFocus, b as createList } from './create-list-c042b693.js';
+import { c as createStore, a as createFocus, b as createList } from './create-list-688a1002.js';
 import 'immer';
 
 function useStore(initialState = {}, middleware = identity) {
-    const { current: form } = useRef(createStore(initialState, middleware));
-    const data = useSyncExternalStore(form.subscribe, form.getData, form.getData);
-    return [data, form.setData, form];
+    const { current: store } = useRef(createStore(initialState, middleware));
+    const data = useSyncExternalStore(store.subscribe, store.getData, store.getData);
+    return [data, store.setData, store];
 }
 
-function useStoreFocus(form, ...path) {
-    const focus = useMemo(() => createFocus(form, ...path), [form, path]);
+function useStoreFocus(store, ...path) {
+    const focus = useMemo(() => createFocus(store, ...path), [store, path]);
     const data = useSyncExternalStore(focus.subscribe, focus.getData, focus.getData);
     return [data, focus.setData, focus];
 }
 
-function useStoreList(form, id = identity) {
-    const { current: list } = useRef(createList(form, id));
-    const items = useSyncExternalStore(form.subscribe, list.getItems, list.getItems);
+function useStoreList(store, id = identity) {
+    const { current: list } = useRef(createList(store, id));
+    const items = useSyncExternalStore(store.subscribe, list.getItems, list.getItems);
     return [
         items,
         {
@@ -30,11 +30,11 @@ function useStoreList(form, id = identity) {
     ];
 }
 
-function useStoreSelector(form, selector) {
-    const data = useSyncExternalStore(form.subscribe, useCallback(() => {
-        return form.getData(selector);
-    }, [form, selector]), () => form.getData(selector));
-    return [data, form.setData, form];
+function useStoreSelector(store, selector) {
+    const data = useSyncExternalStore(store.subscribe, useCallback(() => {
+        return store.getData(selector);
+    }, [store, selector]), () => store.getData(selector));
+    return [data, store.setData, store];
 }
 
 export { useStore, useStoreFocus, useStoreList, useStoreSelector };
