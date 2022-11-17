@@ -540,6 +540,8 @@ function MyStore() {
 }
 ```
 
+Note that the `path` used to create the focus **must not change** between renders, as it's expected to be stable. The focus won't be recreated if the path changes.
+
 ### `useStoreList`
 
 The `useStoreList` hook creates a list from a store (or a focus) and returns a tuple with the list and an object containing the methods to read and write on it:

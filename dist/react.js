@@ -1,5 +1,5 @@
 import { identity } from 'ramda';
-import { useRef, useSyncExternalStore, useMemo, useCallback } from 'react';
+import { useRef, useSyncExternalStore, useCallback } from 'react';
 import { c as createStore, a as createFocus, b as createList } from './create-list-688a1002.js';
 import 'immer';
 
@@ -10,7 +10,7 @@ function useStore(initialState = {}, middleware = identity) {
 }
 
 function useStoreFocus(store, ...path) {
-    const focus = useMemo(() => createFocus(store, ...path), [store, path]);
+    const { current: focus } = useRef(createFocus(store, ...path));
     const data = useSyncExternalStore(focus.subscribe, focus.getData, focus.getData);
     return [data, focus.setData, focus];
 }
