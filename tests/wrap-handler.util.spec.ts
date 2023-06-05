@@ -1,4 +1,4 @@
-import { wrapHandler } from '../src/wrap-handler.util'
+import { HasTarget, InputElement, wrapHandler } from '../src/wrap-handler.util'
 
 describe('wrapHandler', () => {
 	it('wraps a setter function to handle events', () => {
@@ -11,7 +11,7 @@ describe('wrapHandler', () => {
 				value: 'John',
 			},
 		}
-		eventHandler(event as unknown as Event)
+		eventHandler(event as HasTarget)
 		expect(setter).toHaveBeenCalledWith('user', 'name', 'John')
 	})
 
@@ -25,7 +25,7 @@ describe('wrapHandler', () => {
 				checked: true,
 			},
 		}
-		eventHandler(event as unknown as Event)
+		eventHandler(event as HasTarget)
 		expect(setter).toHaveBeenCalledWith('user', 'active', true)
 	})
 })
