@@ -1,24 +1,24 @@
-export declare type DeepPartial<T> = {
+export type DeepPartial<T> = {
     [P in keyof T]?: DeepPartial<T[P]>;
 };
-export declare type Listener = () => void;
-export declare type Unsubscribe = () => void;
-export declare type Producer<T> = (data: T) => T;
-export declare type Selector<T> = (data: T) => any;
-export declare type PathElement = string | number;
-export declare type S<T> = Producer<T> | any;
-export declare type Args<T> = [...PathElement[], S<T>];
+export type Listener = () => void;
+export type Unsubscribe = () => void;
+export type Producer<T> = (data: T) => T;
+export type Selector<T> = (data: T) => any;
+export type PathElement = string | number;
+export type S<T> = Producer<T> | any;
+export type Args<T> = [...PathElement[], S<T>];
 export interface Getter<T> {
     (...path: PathElement[]): any;
     (selector: Selector<T>): any;
 }
-export declare type Setter<T> = (...args: Args<T>) => void;
-export declare type Store<T> = {
+export type Setter<T> = (...args: Args<T>) => void;
+export type Store<T> = {
     getData: Getter<T>;
     setData: Setter<T>;
     subscribe: (listener: Listener) => Unsubscribe;
 };
-export declare type List<K> = {
+export type List<K> = {
     getItems: () => K[];
     setItems: (list: K[]) => void;
     addItem: (item: K) => void;

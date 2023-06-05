@@ -9,5 +9,5 @@ export default {
 		format: 'es',
 	},
 	external: ['react', 'ramda', 'immer'],
-	plugins: [multiInput(), typescript()],
+	plugins: [multiInput.default(), typescript()],
 }
