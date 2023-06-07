@@ -1,6 +1,9 @@
-import { Args, Store, Listener, PathElement, Selector } from './types'
+import { Args, Store, Listener, PathElement, Selector, StoreBaseType } from './types'
 
-export function createFocus<T, K>(store: Store<T>, ...path: PathElement[]): Store<K> {
+export function createFocus<K extends StoreBaseType, T extends StoreBaseType = any>(
+	store: Store<T>,
+	...path: PathElement[]
+): Store<K> {
 	const listeners = new Set<Listener>()
 
 	function onUpdate() {

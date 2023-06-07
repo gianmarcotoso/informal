@@ -26,7 +26,7 @@ type TestStoreState = {
 describe('useStoreList', () => {
 	it('allows to focus on an array using the useStoreList hook', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				todos: [],
 			})
 			const todosFocus = createFocus(store, 'todos')
@@ -43,7 +43,7 @@ describe('useStoreList', () => {
 
 	it('allows to focus on an array even when the array has not yet been initialized', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({})
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({})
 			const todosFocus = createFocus(store, 'todos')
 			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
 
@@ -58,7 +58,7 @@ describe('useStoreList', () => {
 
 	it('allows to add an item on a focused array', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				todos: [],
 			})
 			const todosFocus = createFocus(store, 'todos')
@@ -77,7 +77,7 @@ describe('useStoreList', () => {
 
 	it('allows to edit an item on a focused array', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				todos: [
 					{ id: 1, name: 'foo' },
 					{ id: 2, name: 'bar' },
@@ -99,7 +99,7 @@ describe('useStoreList', () => {
 
 	it('allows to remove an item on a focused array', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				todos: [
 					{ id: 1, name: 'foo' },
 					{ id: 2, name: 'bar' },
@@ -120,9 +120,10 @@ describe('useStoreList', () => {
 
 	it('allows to add a value when the focused array contains strings', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				nest: {
 					tags: [],
+					some: 'foo',
 				},
 			})
 			const tagsFocus = createFocus(store, 'nest.tags')
@@ -141,12 +142,14 @@ describe('useStoreList', () => {
 
 	it('allows to replace a value on a focused nested array of objects', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				nest: {
 					todos: [
 						{ id: 1, name: 'foo' },
 						{ id: 2, name: 'bar' },
 					],
+					some: 'foo',
+					tags: [],
 				},
 			})
 			const todosFocus = createFocus(store, 'nest.todos')
@@ -165,7 +168,7 @@ describe('useStoreList', () => {
 
 	it('does nothing when attempting to edit a non existing item', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				todos: [
 					{ id: 1, name: 'foo' },
 					{ id: 2, name: 'bar' },
@@ -187,9 +190,10 @@ describe('useStoreList', () => {
 
 	it('allows to remove a value on a focused nested array of strings', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				nest: {
 					tags: ['foo', 'bar'],
+					some: 'value',
 				},
 			})
 			const tagsFocus = createFocus(store, 'nest.tags')
@@ -208,16 +212,18 @@ describe('useStoreList', () => {
 
 	it('allows to remove a value on a focused nested array of objects', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				nest: {
 					todos: [
 						{ id: 1, name: 'foo' },
 						{ id: 2, name: 'bar' },
 					],
+					some: 'foo',
+					tags: [],
 				},
 			})
-			const todosFocus = createFocus(store, 'nest.todos')
-			const [todos, todosHandlers] = useStoreList(todosFocus, (i: any) => i.id)
+			const todosFocus = createFocus<Record<string, any>[]>(store, 'nest.todos')
+			const [todos, todosHandlers] = useStoreList<Record<string, any>>(todosFocus, (i: any) => i.id)
 
 			return { data, todos, setData, todosHandlers }
 		}

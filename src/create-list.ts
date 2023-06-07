@@ -1,8 +1,11 @@
 import { identity } from 'ramda'
 
-import { Args, Store, List } from './types'
+import { Args, Store, List, StoreBaseType } from './types'
 
-export function createList<T, K>(store: Store<T>, id: CallableFunction = identity): List<K> {
+export function createList<K, T extends StoreBaseType = any>(
+	store: Store<T>,
+	id: CallableFunction = identity,
+): List<K> {
 	const emptyList: K[] = []
 
 	function getItems(): K[] {

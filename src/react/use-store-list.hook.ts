@@ -1,9 +1,9 @@
-import { Args, Store, List } from '../types'
+import { Args, Store, List, StoreBaseType } from '../types'
 import { identity } from 'ramda'
 import { useRef, useSyncExternalStore } from 'react'
 import { createList } from '../create-list'
 
-export function useStoreList<T, K>(
+export function useStoreList<K extends StoreBaseType, T extends StoreBaseType = any>(
 	store: Store<T>,
 	id: CallableFunction = identity,
 ): [
@@ -16,7 +16,7 @@ export function useStoreList<T, K>(
 	},
 	List<K>,
 ] {
-	const { current: list } = useRef(createList<T, K>(store, id))
+	const { current: list } = useRef(createList<K, T>(store, id))
 	const items = useSyncExternalStore(store.subscribe, list.getItems, list.getItems)
 
 	return [

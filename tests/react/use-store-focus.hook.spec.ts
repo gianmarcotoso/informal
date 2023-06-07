@@ -25,7 +25,7 @@ type TestStoreState = {
 describe('useStoreFocus', () => {
 	it('allows to focus on a nested object using the useStoreFocus hook', () => {
 		function useNestedStoreHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({})
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({})
 			const [nestedData, setNestedData] = useStoreFocus(store, 'nest')
 
 			return { data, nestedData, setData, setNestedData }
@@ -42,10 +42,11 @@ describe('useStoreFocus', () => {
 
 	it('allows to reset the state of a nested object using the useNestedStore hook', () => {
 		function useNestedStoreHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				foo: 'foo',
 				nest: {
 					some: 'bar',
+					tags: ['foo', 'bar'],
 				},
 			})
 			const [nestedData, setNestedData] = useStoreFocus(store, 'nest')
@@ -64,9 +65,11 @@ describe('useStoreFocus', () => {
 
 	it('should allow to focus on an item of an array of objects', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				nest: {
 					todos: [{ id: Math.random(), name: 'foo' }],
+					some: 'bar',
+					tags: ['foo', 'bar'],
 				},
 			})
 
@@ -82,9 +85,11 @@ describe('useStoreFocus', () => {
 
 	it('should allow to edit a focused item of an array of objects', () => {
 		function useStoreListHookTest() {
-			const [data, setData, store] = useStore<TestStoreState>({
+			const [data, setData, store] = useStore<Partial<TestStoreState>>({
 				nest: {
 					todos: [{ id: Math.random(), name: 'foo' }],
+					some: 'bar',
+					tags: ['foo', 'bar'],
 				},
 			})
 
@@ -101,7 +106,7 @@ describe('useStoreFocus', () => {
 		})
 
 		expect(result.current.todo).toHaveProperty('name', 'bar')
-		expect(result.current.data.nest.todos![0]).toHaveProperty('name', 'bar')
-		expect(result.current.data.nest.todos![0]).toHaveProperty('completed', true)
+		expect(result.current.data.nest!.todos![0]).toHaveProperty('name', 'bar')
+		expect(result.current.data.nest!.todos![0]).toHaveProperty('completed', true)
 	})
 })

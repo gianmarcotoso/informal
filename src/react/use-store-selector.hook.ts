@@ -1,8 +1,11 @@
 import { useCallback, useSyncExternalStore } from 'react'
 
-import { Store, Selector, Setter } from '../types'
+import { Store, Selector, Setter, StoreBaseType } from '../types'
 
-export function useStoreSelector<T>(store: Store<T>, selector: Selector<T>): [any, Setter<T>, Store<T>] {
+export function useStoreSelector<T extends StoreBaseType>(
+	store: Store<T>,
+	selector: Selector<T>,
+): [any, Setter<T>, Store<T>] {
 	const data = useSyncExternalStore(
 		store.subscribe,
 		useCallback(() => {

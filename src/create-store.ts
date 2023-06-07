@@ -1,10 +1,13 @@
 import { produce } from 'immer'
-import { clone, identity, last, lensPath, set, view } from 'ramda'
+import { identity, last, lensPath, set, view } from 'ramda'
 
 import { normalizePath } from './normalize-path.util'
-import { Args, DeepPartial, Store, Listener, Producer, PathElement, Selector } from './types'
+import { Args, Store, Listener, Producer, PathElement, Selector, StoreBaseType } from './types'
 
-export function createStore<T>(initialState: DeepPartial<T> = {}, middleware: Producer<T> = identity): Store<T> {
+export function createStore<T extends StoreBaseType>(
+	initialState: T = {} as any,
+	middleware: Producer<T> = identity,
+): Store<T> {
 	let data = produce(initialState, middleware)
 	const listeners = new Set<Listener>()
 
@@ -14,11 +17,11 @@ export function createStore<T>(initialState: DeepPartial<T> = {}, middleware: Pr
 		}
 	}
 
-	function getData<T>(...args: PathElement[] | [Selector<T>]): T {
+	function getData(...args: PathElement[] | [Selector<T>]): T {
 		if (args.length === 1 && typeof args[0] === 'function') {
 			const [selector] = args
 
-			return selector(data as T)
+			return selector(data)
 		}
 
 		return view(lensPath(normalizePath(...(args as PathElement[]))), data)
@@ -39,7 +42,7 @@ export function createStore<T>(initialState: DeepPartial<T> = {}, middleware: Pr
 			nextData = set(pathLens, value, data as T)
 		}
 
-		data = produce(nextData, middleware) as T
+		data = produce(nextData, middleware) as any
 		onUpdate()
 	}
 

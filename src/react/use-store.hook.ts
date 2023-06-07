@@ -1,10 +1,10 @@
 import { identity } from 'ramda'
-import { useRef, useSyncExternalStore, useTransition } from 'react'
+import { useRef, useSyncExternalStore } from 'react'
 import { createStore } from '../create-store'
-import { DeepPartial, Store, Getter, Producer, Setter } from '../types'
+import { Producer, Setter, Store, StoreBaseType } from '../types'
 
-export function useStore<T>(
-	initialState: DeepPartial<T> = {} as T,
+export function useStore<T extends StoreBaseType>(
+	initialState: T = {} as T,
 	middleware: Producer<T> = identity,
 ): [T, Setter<T>, Store<T>] {
 	const { current: store } = useRef(createStore<T>(initialState, middleware))
