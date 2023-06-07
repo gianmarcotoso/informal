@@ -1,2 +1,2 @@
-import { Store, PathElement } from './types';
-export declare function createFocus<T, K>(store: Store<T>, ...path: PathElement[]): Store<K>;
+import { Store, PathElement, StoreBaseType } from './types';
+export declare function createFocus<K extends StoreBaseType, T extends StoreBaseType = any>(store: Store<T>, ...path: PathElement[]): Store<K>;

@@ -1,2 +1,2 @@
-import { DeepPartial, Store, Producer } from './types';
-export declare function createStore<T>(initialState?: DeepPartial<T>, middleware?: Producer<T>): Store<T>;
+import { Store, Producer, StoreBaseType } from './types';
+export declare function createStore<T extends StoreBaseType>(initialState?: T, middleware?: Producer<T>): Store<T>;

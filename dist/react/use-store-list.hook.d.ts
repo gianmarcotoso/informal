@@ -1,5 +1,5 @@
-import { Args, Store, List } from '../types';
-export declare function useStoreList<T, K>(store: Store<T>, id?: CallableFunction): [
+import { Args, Store, List, StoreBaseType } from '../types';
+export declare function useStoreList<K extends StoreBaseType, T extends StoreBaseType = any>(store: Store<T>, id?: CallableFunction): [
     K[],
     {
         addItem: (item: K) => void;

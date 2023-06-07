@@ -1,6 +1,4 @@
-export type DeepPartial<T> = {
-    [P in keyof T]?: DeepPartial<T[P]>;
-};
+export type StoreBaseType = Record<string, any> | string | number | boolean;
 export type Listener = () => void;
 export type Unsubscribe = () => void;
 export type Producer<T> = (data: T) => T;
