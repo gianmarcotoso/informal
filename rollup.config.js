@@ -7,7 +7,8 @@ export default {
 		dir: './dist',
 		entryFileNames: '[name].js',
 		format: 'es',
+		preserveModules: true,
 	},
 	external: ['react', 'ramda', 'immer'],
-	plugins: [multiInput.default(), typescript()],
+	plugins: [typescript()],
 }
