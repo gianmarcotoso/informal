@@ -8,26 +8,28 @@ export function createList<K, T extends StoreBaseType = any>(
 ): List<K> {
 	const emptyList: K[] = []
 
+	const storeSetData = store.setData as (...args: any[]) => void
+
 	function getItems(): K[] {
 		return store.getData() ?? emptyList
 	}
 
 	function setItems(list: K[]) {
-		store.setData(list)
+		storeSetData(list)
 	}
 
 	function addItem(item: K) {
-		store.setData((list: K[]) => [...list, item])
+		storeSetData((list: K[]) => [...list, item])
 	}
 
 	function updateItem(item: K, ...args: Args<K>) {
 		const index = getItems().findIndex((i) => id(i) === id(item))
 
-		store.setData(index, ...args)
+		storeSetData(index, ...args)
 	}
 
 	function removeItem(item: K) {
-		store.setData((list: K[]) => {
+		storeSetData((list: K[]) => {
 			return list.filter((x) => id(x) !== id(item))
 		})
 	}

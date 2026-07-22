@@ -39,7 +39,7 @@ describe('use-store.hook', () => {
 		const [, setData] = result.current
 
 		act(() => {
-			setData(null)
+			;(setData as any)(null)
 		})
 
 		expect(result.current[0]).toEqual(null)

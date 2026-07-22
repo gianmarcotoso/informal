@@ -37,8 +37,8 @@ function createStore(initialState = {}, middleware = identity) {
         return () => listeners.delete(listener);
     }
     return {
-        getData,
-        setData,
+        getData: getData,
+        setData: setData,
         subscribe,
     };
 }

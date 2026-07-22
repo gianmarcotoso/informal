@@ -81,7 +81,7 @@ describe('createStore', () => {
 	})
 
 	it('should replace data when setting on a specific key', () => {
-		const store = createStore({ user: { name: 'John' } })
+		const store = createStore({ user: { name: 'John' } }) as any
 
 		store.setData('user.age', 25)
 		expect(store.getData()).toEqual({ user: { name: 'John', age: 25 } })

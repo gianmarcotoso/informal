@@ -1,4 +1,4 @@
-import { Args, Store, Listener, PathElement, Selector, StoreBaseType } from './types'
+import { Args, Store, Listener, PathElement, Selector, StoreBaseType, Getter, Setter } from './types'
 
 export function createFocus<K extends StoreBaseType, T extends StoreBaseType = any>(
 	store: Store<T>,
@@ -12,18 +12,21 @@ export function createFocus<K extends StoreBaseType, T extends StoreBaseType = a
 		}
 	}
 
+	const storeGetData = store.getData as (...args: any[]) => any
+	const storeSetData = store.setData as (...args: any[]) => void
+
 	function getData<K>(...args: PathElement[] | [Selector<K>]): K {
 		if (args.length === 1 && typeof args[0] === 'function') {
 			const [selector] = args
 
-			return selector(store.getData(...path) as K)
+			return selector(storeGetData(...path) as K)
 		}
 
-		return store.getData(...([...path, ...args] as PathElement[]))
+		return storeGetData(...path, ...args)
 	}
 
 	function setData(...args: Args<K>) {
-		store.setData(...[...path, ...args])
+		storeSetData(...path, ...args)
 
 		onUpdate()
 	}
@@ -35,8 +38,8 @@ export function createFocus<K extends StoreBaseType, T extends StoreBaseType = a
 	}
 
 	return {
-		getData,
-		setData,
+		getData: getData as Getter<K>,
+		setData: setData as Setter<K>,
 		subscribe,
 	}
 }

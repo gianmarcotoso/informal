@@ -680,20 +680,18 @@ Yes, it should.
 
 I am developing this library for my own projects, and I do use it in production. I try to keep a 100% coverage in unit tests, but the library may be missing some features or have some bugs, so if you find any issue please open an issue or propose a pull request.
 
-**The current status of TypeScript typings is quite poor, I'll need to improve them in the future. Can you help? :)**
-
 ## Acknowledgements
 
--   [`ramda`](https://ramdajs.com/), on which this library is heavily reliant upon;
--   [`immer`](https://github.com/immerjs/immer), for the very same reason;
--   [`reselect`](https://github.com/reduxjs/reselect), for making the creation of selectors easy;
--   [`solidjs`](https://www.solidjs.com/), for its Store API, which heavily influenced the API of this library;
+- [`ramda`](https://ramdajs.com/), on which this library is heavily reliant upon;
+- [`immer`](https://github.com/immerjs/immer), for the very same reason;
+- [`reselect`](https://github.com/reduxjs/reselect), for making the creation of selectors easy;
+- [`solidjs`](https://www.solidjs.com/), for its Store API, which heavily influenced the API of this library;
 
 ## Previous Work
 
--   [use-form](https://github.com/gianmarcotoso/use-form), a similar, React-only library I currently use/develop;
--   [react-attire](https://github.com/gianmarcotoso/react-attire) was my attempt at doing something similar using render props. It was much more limited but it did its job, even though I haven't used it since hooks have become available.
--   [react-ui-formalize](https://github.com/gianmarcotoso/react-ui-formalize) was my first attempt at tackling the "form" issue, using higher order components. Very old, very deprecated...
+- [use-form](https://github.com/gianmarcotoso/use-form), a similar, React-only library I currently use/develop;
+- [react-attire](https://github.com/gianmarcotoso/react-attire) was my attempt at doing something similar using render props. It was much more limited but it did its job, even though I haven't used it since hooks have become available.
+- [react-ui-formalize](https://github.com/gianmarcotoso/react-ui-formalize) was my first attempt at tackling the "form" issue, using higher order components. Very old, very deprecated...
 
 ## License
 

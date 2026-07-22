@@ -5,15 +5,17 @@ function createFocus(store, ...path) {
             listener();
         }
     }
+    const storeGetData = store.getData;
+    const storeSetData = store.setData;
     function getData(...args) {
         if (args.length === 1 && typeof args[0] === 'function') {
             const [selector] = args;
-            return selector(store.getData(...path));
+            return selector(storeGetData(...path));
         }
-        return store.getData(...[...path, ...args]);
+        return storeGetData(...path, ...args);
     }
     function setData(...args) {
-        store.setData(...[...path, ...args]);
+        storeSetData(...path, ...args);
         onUpdate();
     }
     function subscribe(listener) {
@@ -21,8 +23,8 @@ function createFocus(store, ...path) {
         return () => listeners.delete(listener);
     }
     return {
-        getData,
-        setData,
+        getData: getData,
+        setData: setData,
         subscribe,
     };
 }

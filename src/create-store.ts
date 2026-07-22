@@ -2,13 +2,13 @@ import { produce } from 'immer'
 import { identity, last, lensPath, set, view } from 'ramda'
 
 import { normalizePath } from './normalize-path.util'
-import { Args, Store, Listener, Producer, PathElement, Selector, StoreBaseType } from './types'
+import { Args, Store, Listener, Producer, PathElement, Selector, StoreBaseType, Getter, Setter, Widen } from './types'
 
-export function createStore<T extends StoreBaseType>(
-	initialState: T = {} as any,
+export function createStore<I extends StoreBaseType, T extends StoreBaseType = Widen<I>>(
+	initialState: I = {} as any,
 	middleware: Producer<T> = identity,
 ): Store<T> {
-	let data = produce(initialState, middleware)
+	let data = produce(initialState as unknown as T, middleware)
 	const listeners = new Set<Listener>()
 
 	function onUpdate() {
@@ -53,8 +53,8 @@ export function createStore<T extends StoreBaseType>(
 	}
 
 	return {
-		getData,
-		setData,
+		getData: getData as Getter<T>,
+		setData: setData as Setter<T>,
 		subscribe,
 	}
 }

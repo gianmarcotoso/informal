@@ -10,5 +10,5 @@ export default {
 		preserveModules: true,
 	},
 	external: ['react', 'ramda', 'immer'],
-	plugins: [typescript()],
+	plugins: [typescript({ tsconfig: './tsconfig.build.json' })],
 }
