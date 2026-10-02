@@ -4,7 +4,7 @@ import { useStoreFocus } from '../../src/react/use-store-focus.hook'
 import { useStore } from '../../src/react/use-store.hook'
 
 type TestStoreStateTodo = {
-	completed?: string
+	completed?: boolean
 	name: string
 	id: number
 }
